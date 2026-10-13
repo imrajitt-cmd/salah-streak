@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Salah Streak · Dhaka</title>
+<meta name="theme-color" content="#58cc02">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#f3faf5; --card:#ffffff; --ink:#17302a; --muted:#62796f; --line:#dce9e0;
+  --green:#58cc02; --green-d:#46a302; --gold:#ffc800; --gold-d:#d9a400;
+  --red:#ff4b4b; --red-d:#d63a3a; --blue:#1cb0f6; --soft:#e7f7d8; --dot:#d6e2da;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#10201a; --card:#18302a; --ink:#e8f5ee; --muted:#93b0a2; --line:#2a463d;
+    --soft:#22401f; --dot:#2d4a40;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#10201a; --card:#18302a; --ink:#e8f5ee; --muted:#93b0a2; --line:#2a463d;
+  --soft:#22401f; --dot:#2d4a40;
+}
+*,*::before,*::after{box-sizing:inherit}
+html,body{margin:0;background:var(--bg);color:var(--ink);
+  font-family:"Nunito",ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Bengali",sans-serif;
+  font-weight:700;-webkit-font-smoothing:antialiased}
+body{min-height:100%}
+#app{max-width:520px;margin:0 auto;padding:14px 14px 40px}
+header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
+.brand{font-weight:900;font-size:20px;letter-spacing:-.01em}
+.brand small{display:block;font-size:12px;color:var(--muted);font-weight:700;letter-spacing:0}
+.chips{display:flex;gap:8px}
+.chip{background:var(--card);border:2px solid var(--line);border-radius:99px;padding:6px 12px;font-weight:900;font-size:15px;white-space:nowrap}
+.chip.flame{color:#ff9600}.chip.xp{color:var(--gold-d)}
+.card{background:var(--card);border:2px solid var(--line);border-radius:20px;padding:16px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);font-weight:900}
+.lvl{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.lvl b{white-space:nowrap;font-weight:900}
+.lvl .bar{flex:1;height:12px}
+.bar{height:14px;background:var(--line);border-radius:99px;overflow:hidden}
+.bar>i{display:block;height:100%;background:var(--green);border-radius:99px;transition:width .6s ease}
+.bar.gold>i{background:var(--gold)}
+.hero.urgent .bar>i{background:var(--red)}
+.mascot{display:flex;gap:12px;align-items:center;margin-bottom:14px}
+.moon{font-size:46px;line-height:1;animation:bob 2.4s ease-in-out infinite}
+@media (prefers-reduced-motion: reduce){.moon{animation:none}}
+@keyframes bob{50%{transform:translateY(-6px) rotate(-6deg)}}
+.bubble{position:relative;background:var(--soft);border-radius:16px;padding:10px 14px;font-size:15px;flex:1}
+.bubble::before{content:"";position:absolute;left:-8px;top:50%;margin-top:-8px;border:8px solid transparent;border-left:0;border-right-color:var(--soft)}
+.hero .label{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:900}
+.hero .pname{font-size:32px;font-weight:900;line-height:1.1;margin:2px 0 0}
+.hero .pname small{font-size:18px;color:var(--muted);font-weight:700;margin-left:6px}
+.cd{font-size:44px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em;margin:6px 0 8px}
+.hero.urgent .cd{color:var(--red)}
+.meta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:6px}
+.next{margin-top:12px;padding-top:12px;border-top:2px dashed var(--line);font-size:14px;color:var(--muted)}
+.next b{color:var(--ink)}
+.btn{font:inherit;font-weight:900;text-transform:uppercase;letter-spacing:.05em;font-size:14px;border:0;border-radius:14px;
+  padding:12px 18px;background:var(--green);color:#fff;box-shadow:0 4px 0 var(--green-d);cursor:pointer;width:100%;margin-top:12px}
+.btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--green-d)}
+.btn.sm{width:auto;margin:0;padding:8px 12px;font-size:12px}
+.btn.gold{background:var(--gold);color:#4a3600;box-shadow:0 4px 0 var(--gold-d)}
+.btn.gold:active{box-shadow:0 1px 0 var(--gold-d)}
+.btn.ghost{background:var(--card);color:var(--blue);border:2px solid var(--line);box-shadow:0 4px 0 var(--line)}
+.done-pill{display:inline-block;background:var(--soft);color:var(--green-d);border-radius:12px;padding:10px 14px;margin-top:12px;font-weight:900}
+ul{list-style:none;margin:0;padding:0}
+.row{display:flex;align-items:center;gap:12px;padding:11px 0;border-bottom:2px solid var(--line)}
+.row:last-child{border-bottom:0}
+.row .ic{font-size:26px;width:36px;text-align:center}
+.row .nm{flex:1;min-width:0}
+.row .nm b{font-weight:900;font-size:17px}
+.row .nm small{color:var(--muted);margin-left:4px}
+.row .tm{font-size:13px;color:var(--muted)}
+.row.cur{background:var(--soft);margin:0 -10px;padding:11px 10px;border-radius:14px;border-bottom:0}
+.tag{font-weight:900;font-size:13px;white-space:nowrap}
+.tag.ok{color:var(--green-d)}.tag.late{color:var(--gold-d)}.tag.lock{color:var(--muted)}
+.week{display:flex;justify-content:space-between;gap:4px}
+.day{flex:1;text-align:center;font-size:12px;color:var(--muted)}
+.day.today b{color:var(--ink)}
+.dots{display:flex;flex-direction:column;align-items:center;gap:3px;margin-top:6px}
+.dots i{width:14px;height:14px;border-radius:50%;background:var(--dot);display:block}
+.dots i.ok{background:var(--green)}.dots i.late{background:var(--gold)}
+.dots.perfect{filter:drop-shadow(0 0 4px var(--green))}
+.badges{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.badge{text-align:center;font-size:11px;line-height:1.2;color:var(--muted)}
+.badge .em{font-size:30px;display:block;margin-bottom:2px}
+.badge.locked .em{filter:grayscale(1);opacity:.35}
+.badge.got{color:var(--ink)}
+.set{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0}
+.set span{font-size:15px}
+.set select{font:inherit;font-weight:800;padding:6px 8px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+.note{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:8px;font-weight:700}
+#toasts{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 10px);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:60;pointer-events:none}
+.toast{background:#17302a;color:#fff;border-radius:14px;padding:10px 16px;font-weight:800;font-size:14px;max-width:92%;box-shadow:0 6px 20px rgba(0,0,0,.25);animation:pop .35s ease}
+.toast.gold{background:var(--gold);color:#4a3600}
+.toast.green{background:var(--green-d)}
+@keyframes pop{from{transform:translateY(-14px) scale(.9);opacity:0}}
+.confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:55}
+.confetti i{position:absolute;top:-14px;width:8px;height:13px;border-radius:2px;animation:fall linear forwards}
+@keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+footer{font-size:12px;color:var(--muted);text-align:center;line-height:1.5;margin-top:6px}
+</style>
+</head>
+<body>
+<div id="toasts"></div>
+<div id="app"></div>
+
+<script src="native.js"></script>
+<script>
+(function(){
+"use strict";
+/* ---------- constants ---------- */
+var LAT=23.8103, LNG=90.4125, TZ=6; // Dhaka, UTC+6
+var PR=[
+  {id:"fajr",name:"Fajr",bn:"ফজর",icon:"🌅"},
+  {id:"dhuhr",name:"Dhuhr",bn:"যোহর",icon:"☀️"},
+  {id:"asr",name:"Asr",bn:"আসর",icon:"🌤️"},
+  {id:"maghrib",name:"Maghrib",bn:"মাগরিব",icon:"🌇"},
+  {id:"isha",name:"Isha",bn:"এশা",icon:"🌙"}
+];
+var KEY="salah_streak_v1";
+
+/* ---------- storage (always guarded) ---------- */
+var mem={};
+function sget(k){try{return window.localStorage.getItem(k);}catch(e){return mem[k]==null?null:mem[k];}}
+function sset(k,v){try{window.localStorage.setItem(k,v);}catch(e){mem[k]=v;}}
+var S={log:{},settings:{notif:false,sound:true,warn:15},notified:{},badges:[]};
+try{
+  var raw=sget(KEY);
+  if(raw){
+    var p=JSON.parse(raw);
+    if(p&&typeof p==="object"){
+      S.log=p.log||{};
+      S.settings=Object.assign(S.settings,p.settings||{});
+      S.notified=p.notified||{};
+      S.badges=p.badges||[];
+    }
+  }
+}catch(e){}
+function save(){
+  // prune old reminder keys
+  var keys=Object.keys(S.notified);
+  if(keys.length>120){keys.sort();keys.slice(0,keys.length-120).forEach(function(k){delete S.notified[k];});}
+  sset(KEY,JSON.stringify(S));
+}
+
+/* ---------- prayer time maths (Karachi: Fajr/Isha 18°, Hanafi Asr) ---------- */
+var rad=Math.PI/180;
+function sin(a){return Math.sin(a*rad);}
+function cos(a){return Math.cos(a*rad);}
+function fixA(a){return a-360*Math.floor(a/360);}
+function fixH(a){return a-24*Math.floor(a/24);}
+function julian(y,m,d){
+  if(m<=2){y-=1;m+=12;}
+  var A=Math.floor(y/100),B=2-A+Math.floor(A/4);
+  return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5;
+}
+function sunPos(jd){
+  var D=jd-2451545.0;
+  var g=fixA(357.529+0.98560028*D);
+  var q=fixA(280.459+0.98564736*D);
+  var L=fixA(q+1.915*sin(g)+0.020*sin(2*g));
+  var e=23.439-0.00000036*D;
+  var RA=fixH(Math.atan2(cos(e)*sin(L),cos(L))/rad/15);
+  return {decl:Math.asin(sin(e)*sin(L))/rad, eqt:q/15-RA};
+}
+var tcache={};
+function times(y,m,d){
+  var ck=y+"-"+m+"-"+d;
+  if(tcache[ck])return tcache[ck];
+  var jd=julian(y,m,d)-LNG/(15*24);
+  function mid(t){return fixH(12-sunPos(jd+t).eqt);}
+  function ang(a,t,ccw){
+    var dec=sunPos(jd+t).decl;
+    var x=(-sin(a)-sin(dec)*sin(LAT))/(cos(dec)*cos(LAT));
+    x=Math.max(-1,Math.min(1,x));
+    var v=Math.acos(x)/rad/15, n=mid(t);
+    return ccw?n-v:n+v;
+  }
+  function asr(f,t){
+    var dec=sunPos(jd+t).decl;
+    var a=-Math.atan(1/(f+Math.tan(Math.abs(LAT-dec)*rad)))/rad;
+    return ang(a,t,false);
+  }
+  var h={
+    fajr:ang(18,5/24,true),
+    sunrise:ang(0.833,6/24,true),
+    dhuhr:mid(0.5),
+    asr:asr(2,13/24),
+    sunset:ang(0.833,18/24,false),
+    isha:ang(18,18/24,false)
+  };
+  var out={};
+  Object.keys(h).forEach(function(k){
+    var ms=Date.UTC(y,m-1,d)+(h[k]-LNG/15)*3600000; // local solar -> UTC
+    out[k]=Math.round(ms/60000)*60000;
+  });
+  tcache[ck]=out;
+  return out;
+}
+
+/* ---------- Dhaka date helpers ---------- */
+function dk(ms){
+  var d=new Date(ms+TZ*3600000);
+  return {y:d.getUTCFullYear(),m:d.getUTCMonth()+1,d:d.getUTCDate(),h:d.getUTCHours(),mi:d.getUTCMinutes(),s:d.getUTCSeconds(),wd:d.getUTCDay()};
+}
+function pad(n){return (n<10?"0":"")+n;}
+function key(y,m,d){return y+"-"+pad(m)+"-"+pad(d);}
+function shift(y,m,d,n){var t=new Date(Date.UTC(y,m-1,d+n));return [t.getUTCFullYear(),t.getUTCMonth()+1,t.getUTCDate()];}
+function fmtT(ms){var p=dk(ms),h=p.h%12||12;return h+":"+pad(p.mi)+" "+(p.h<12?"AM":"PM");}
+function fmtCD(ms){
+  ms=Math.max(0,ms);var s=Math.floor(ms/1000);
+  return pad(Math.floor(s/3600))+":"+pad(Math.floor(s%3600/60))+":"+pad(s%60);
+}
+function pinfo(id){return PR.filter(function(x){return x.id===id;})[0];}
+
+function windowsFor(now){
+  var p=dk(now),out=[];
+  for(var n=-1;n<=1;n++){
+    var a=shift(p.y,p.m,p.d,n), b=shift(a[0],a[1],a[2],1);
+    var t=times(a[0],a[1],a[2]), tn=times(b[0],b[1],b[2]), k=key(a[0],a[1],a[2]);
+    out.push({day:k,id:"fajr",s:t.fajr,e:t.sunrise});
+    out.push({day:k,id:"dhuhr",s:t.dhuhr,e:t.asr});
+    out.push({day:k,id:"asr",s:t.asr,e:t.sunset});
+    out.push({day:k,id:"maghrib",s:t.sunset,e:t.isha});
+    out.push({day:k,id:"isha",s:t.isha,e:tn.fajr});
+  }
+  return out;
+}
+function isDone(w){return !!(S.log[w.day]&&S.log[w.day][w.id]);}
+function dayCount(k){var l=S.log[k]||{};return PR.filter(function(x){return l[x.id];}).length;}
+
+/* ---------- stats, XP, badges ---------- */
+function stats(){
+  var xp=0,prayers=0,onTime=0,fajrOn=0,perfect=0;
+  var keys=Object.keys(S.log).sort();
+  keys.forEach(function(k){
+    var l=S.log[k],c=0;
+    PR.forEach(function(x){
+      var r=l[x.id];if(!r)return;
+      c++;prayers++;
+      if(r.ok){xp+=10;onTime++;if(x.id==="fajr")fajrOn++;}else{xp+=3;}
+    });
+    if(c===5){perfect++;xp+=20;}
+  });
+  var p=dk(Date.now()),streak=0;
+  var off=dayCount(key(p.y,p.m,p.d))===5?0:-1;
+  for(;;off--){
+    var a=shift(p.y,p.m,p.d,off);
+    if(dayCount(key(a[0],a[1],a[2]))===5)streak++;else break;
+    if(streak>3650)break;
+  }
+  var best=0,run=0,prev=null;
+  keys.forEach(function(k){
+    if(dayCount(k)!==5){run=0;prev=null;return;}
+    var t=Date.parse(k+"T00:00:00Z");
+    run=(prev!==null&&t-prev===86400000)?run+1:1;
+    prev=t;best=Math.max(best,run);
+  });
+  best=Math.max(best,streak);
+  return {xp:xp,prayers:prayers,onTime:onTime,fajrOn:fajrOn,perfect:perfect,streak:streak,best:best,level:Math.floor(xp/100)+1};
+}
+var BADGES=[
+  {id:"first",em:"🌱",name:"First step",test:function(s){return s.prayers>=1;}},
+  {id:"perfect",em:"⭐",name:"Perfect day",test:function(s){return s.perfect>=1;}},
+  {id:"s3",em:"🔥",name:"3-day streak",test:function(s){return s.best>=3;}},
+  {id:"s7",em:"🏅",name:"7-day streak",test:function(s){return s.best>=7;}},
+  {id:"s30",em:"👑",name:"30-day streak",test:function(s){return s.best>=30;}},
+  {id:"fajr10",em:"🌄",name:"Fajr fighter ×10",test:function(s){return s.fajrOn>=10;}},
+  {id:"ot50",em:"⏱️",name:"50 on time",test:function(s){return s.onTime>=50;}},
+  {id:"p100",em:"💎",name:"100 prayers",test:function(s){return s.prayers>=100;}}
+];
+function earned(s){return BADGES.filter(function(b){return b.test(s);}).map(function(b){return b.id;});}
+
+/* ---------- feedback: toast, confetti, sound ---------- */
+function toast(msg,cls){
+  var box=document.getElementById("toasts");
+  var t=document.createElement("div");
+  t.className="toast "+(cls||"");t.textContent=msg;
+  box.appendChild(t);
+  setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},4200);
+}
+function confetti(){
+  try{if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;}catch(e){}
+  var c=document.createElement("div");c.className="confetti";
+  var cols=["#58cc02","#ffc800","#1cb0f6","#ff86d0","#ff4b4b"];
+  for(var i=0;i<40;i++){
+    var s=document.createElement("i");
+    s.style.left=(Math.random()*100)+"%";
+    s.style.background=cols[i%5];
+    s.style.animationDelay=(Math.random()*0.3)+"s";
+    s.style.animationDuration=(1.3+Math.random()*1.1)+"s";
+    c.appendChild(s);
+  }
+  document.body.appendChild(c);
+  setTimeout(function(){if(c.parentNode)c.parentNode.removeChild(c);},3000);
+}
+var actx=null;
+function chime(up){
+  if(!S.settings.sound)return;
+  try{
+    actx=actx||new (window.AudioContext||window.webkitAudioContext)();
+    var notes=up?[523,659,784]:[660,880];
+    notes.forEach(function(f,i){
+      var o=actx.createOscillator(),g=actx.createGain();
+      o.type="sine";o.frequency.value=f;
+      var t0=actx.currentTime+i*0.14;
+      g.gain.setValueAtTime(0.0001,t0);
+      g.gain.exponentialRampToValueAtTime(0.18,t0+0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001,t0+0.35);
+      o.connect(g);g.connect(actx.destination);
+      o.start(t0);o.stop(t0+0.4);
+    });
+  }catch(e){}
+}
+
+/* ---------- native (Android) background reminders ---------- */
+var NAT=!!(window.SalahNative&&window.SalahNative.isNative);
+var nperm="unknown", nexact=true, schedBusy=false, schedAgain=false;
+function refreshNative(cb){
+  if(!NAT){if(cb)cb();return;}
+  window.SalahNative.permission().then(function(p){
+    nperm=p;
+    return window.SalahNative.exactAllowed();
+  }).then(function(x){nexact=x;if(cb)cb();}).catch(function(){if(cb)cb();});
+}
+function buildSchedule(now){
+  var items=[],p=dk(now),DAYS=14;
+  for(var n=0;n<DAYS;n++){
+    var a=shift(p.y,p.m,p.d,n), b=shift(a[0],a[1],a[2],1);
+    var t=times(a[0],a[1],a[2]), tn=times(b[0],b[1],b[2]), k=key(a[0],a[1],a[2]);
+    var dn=Math.floor(Date.UTC(a[0],a[1]-1,a[2])/86400000);
+    var wins=[
+      {id:"fajr",s:t.fajr,e:t.sunrise},{id:"dhuhr",s:t.dhuhr,e:t.asr},
+      {id:"asr",s:t.asr,e:t.sunset},{id:"maghrib",s:t.sunset,e:t.isha},
+      {id:"isha",s:t.isha,e:tn.fajr}
+    ];
+    wins.forEach(function(w,i){
+      var nm=pinfo(w.id).name, done=!!(S.log[k]&&S.log[k][w.id]);
+      items.push({id:dn*20+i*2,at:w.s,title:nm+" time 🕌",body:"The "+nm+" window just opened ("+fmtT(w.s)+"). Pray on time to keep your streak 🔥"});
+      var wt=w.e-S.settings.warn*60000;
+      if(!done)items.push({id:dn*20+i*2+1,at:wt,title:"⏳ "+nm+" ending soon",body:"About "+S.settings.warn+" min left for "+nm+" (ends "+fmtT(w.e)+"). Don't lose your streak!"});
+    });
+  }
+  return items;
+}
+function scheduleNative(){
+  if(!NAT)return;
+  if(schedBusy){schedAgain=true;return;}
+  schedBusy=true;
+  window.SalahNative.scheduleAll(buildSchedule(Date.now())).then(function(){},function(){}).then(function(){
+    schedBusy=false;
+    if(schedAgain){schedAgain=false;scheduleNative();}
+  });
+}
+
+/* ---------- reminders ---------- */
+function notify(title,body){
+  toast(title+" — "+body,"gold");
+  chime(false);
+  try{
+    if(S.settings.notif&&"Notification" in window&&Notification.permission==="granted"){
+      new Notification(title,{body:body,tag:title});
+    }
+  }catch(e){}
+}
+function checkReminders(now,ws){
+  if(NAT)return;
+  var changed=false;
+  ws.forEach(function(w){
+    var nm=pinfo(w.id).name;
+    var k1=w.day+w.id+"s";
+    if(now>=w.s&&now<w.s+5*60000&&!S.notified[k1]){
+      S.notified[k1]=1;changed=true;
+      notify(nm+" time 🕌","The "+nm+" window just opened ("+fmtT(w.s)+"). Keep your streak going!");
+    }
+    var wt=w.e-S.settings.warn*60000, k2=w.day+w.id+"w";
+    if(!isDone(w)&&now>=wt&&now<wt+5*60000&&now<w.e&&!S.notified[k2]){
+      S.notified[k2]=1;changed=true;
+      notify("⏳ "+nm+" ending soon","About "+Math.ceil((w.e-now)/60000)+" min left for "+nm+". Don't lose your streak!");
+    }
+  });
+  if(changed)save();
+}
+
+/* ---------- logging a prayer ---------- */
+function logPrayer(day,id){
+  var now=Date.now();
+  var ws=windowsFor(now);
+  var w=ws.filter(function(x){return x.day===day&&x.id===id;})[0];
+  if(!w||now<w.s||isDone(w))return;
+  var before=stats(), bBefore=earned(before);
+  var ok=now<w.e;
+  S.log[day]=S.log[day]||{};
+  S.log[day][id]={t:now,ok:ok};
+  var after=stats(), bAfter=earned(after);
+  S.badges=bAfter;
+  save();
+  scheduleNative();
+  var gain=after.xp-before.xp, nm=pinfo(id).name;
+  toast((ok?"+10 XP · ":"+3 XP · ")+nm+(ok?" done on time! 🎉":" (qada) logged"),ok?"green":"");
+  chime(ok);
+  if(ok||dayCount(day)===5)confetti();
+  if(dayCount(day)===5){setTimeout(function(){toast("⭐ Perfect day! +20 bonus XP","gold");},700);}
+  if(after.level>before.level){setTimeout(function(){toast("🎊 Level up! You're now level "+after.level,"gold");confetti();},1300);}
+  bAfter.forEach(function(b){
+    if(bBefore.indexOf(b)<0){
+      var bd=BADGES.filter(function(x){return x.id===b;})[0];
+      setTimeout(function(){toast(bd.em+" New badge: "+bd.name,"gold");},1900);
+    }
+  });
+  render();
+}
+
+/* ---------- render ---------- */
+var curKey="";
+function current(now,ws){
+  var cw=null,nw=null,i;
+  for(i=0;i<ws.length;i++){if(now>=ws[i].s&&now<ws[i].e){cw=ws[i];break;}}
+  for(i=0;i<ws.length;i++){if(ws[i].s>now){nw=ws[i];break;}}
+  return {cw:cw,nw:nw};
+}
+function stateKey(now){
+  var ws=windowsFor(now),c=current(now,ws);
+  return (c.cw?c.cw.day+c.cw.id:"none")+"|"+(c.nw?c.nw.day+c.nw.id:"")+"|"+(c.cw&&isDone(c.cw)?1:0);
+}
+function render(){
+  var now=Date.now(), ws=windowsFor(now), c=current(now,ws), cw=c.cw, nw=c.nw;
+  var st=stats(), p=dk(now), todayKey=key(p.y,p.m,p.d);
+  curKey=stateKey(now);
+  var h="";
+
+  h+='<header><div class="brand">🕌 Salah Streak<small>Dhaka, Bangladesh · '+p.d+"/"+p.m+"/"+p.y+'</small></div>'+
+     '<div class="chips"><span class="chip flame">🔥 '+st.streak+'</span><span class="chip xp">⚡ '+st.xp+'</span></div></header>';
+
+  h+='<div class="lvl"><b>Level '+st.level+'</b><div class="bar gold"><i style="width:'+(st.xp%100)+'%"></i></div><span class="tm" style="font-size:12px;color:var(--muted)">'+(st.xp%100)+'/100</span></div>';
+
+  // hero
+  var msg,done=cw&&isDone(cw);
+  if(!cw){msg="Quiet time before the next prayer. Get your wudu ready! 💧";}
+  else if(done){msg="MashaAllah! "+pinfo(cw.id).name+" is done. "+(dayCount(todayKey)<5?"Keep going — finish all 5 today!":"All 5 done today! ⭐");}
+  else{msg=pinfo(cw.id).name+" is open. Pray on time to earn +10 XP! "+(st.streak>0?"Your "+st.streak+"-day streak is counting on you 🔥":"");}
+  h+='<section class="card hero" id="hero">';
+  h+='<div class="mascot"><div class="moon">🌙</div><div class="bubble" id="bubble">'+msg+'</div></div>';
+  if(cw){
+    var pi=pinfo(cw.id);
+    h+='<div class="label">Current prayer</div><div class="pname">'+pi.icon+' '+pi.name+'<small>'+pi.bn+'</small></div>';
+    h+='<div class="cd" id="cd">--:--:--</div>';
+    h+='<div class="bar"><i id="bar" style="width:0%"></i></div>';
+    h+='<div class="meta"><span>Started '+fmtT(cw.s)+'</span><span>Ends '+fmtT(cw.e)+'</span></div>';
+    if(done){
+      var r=S.log[cw.day][cw.id];
+      h+='<div class="done-pill">✅ Done '+(r.ok?"on time · +10 XP":"· +3 XP")+'</div>';
+    }else{
+      h+='<button class="btn" data-act="pray" data-day="'+cw.day+'" data-id="'+cw.id+'">I prayed ✓</button>';
+    }
+    if(nw){
+      var ni=pinfo(nw.id);
+      h+='<div class="next">Next: <b>'+ni.icon+' '+ni.name+'</b> at <b>'+fmtT(nw.s)+'</b> · in <span id="nx">--:--:--</span></div>';
+    }
+  }else if(nw){
+    var ni2=pinfo(nw.id);
+    h+='<div class="label">Next prayer</div><div class="pname">'+ni2.icon+' '+ni2.name+'<small>'+ni2.bn+'</small></div>';
+    h+='<div class="cd" id="cd">--:--:--</div>';
+    h+='<div class="meta"><span>Starts at '+fmtT(nw.s)+'</span><span>No fard prayer right now</span></div>';
+  }
+  h+='</section>';
+
+  // today list
+  h+='<section class="card"><h2>Today</h2><ul>';
+  ws.filter(function(w){return w.day===todayKey;}).forEach(function(w){
+    var pi=pinfo(w.id), r=S.log[w.day]&&S.log[w.day][w.id];
+    var isCur=cw&&cw.day===w.day&&cw.id===w.id;
+    var act;
+    if(r){act=r.ok?'<span class="tag ok">✅ +10</span>':'<span class="tag late">✔ late +3</span>';}
+    else if(isCur){act='<button class="btn sm" data-act="pray" data-day="'+w.day+'" data-id="'+w.id+'">Pray ✓</button>';}
+    else if(now>=w.e){act='<button class="btn sm gold" data-act="pray" data-day="'+w.day+'" data-id="'+w.id+'">Qada</button>';}
+    else{act='<span class="tag lock">🔒</span>';}
+    h+='<li class="row'+(isCur?" cur":"")+'"><span class="ic">'+pi.icon+'</span><div class="nm"><b>'+pi.name+'</b><small>'+pi.bn+'</small><div class="tm">'+fmtT(w.s)+' – '+fmtT(w.e)+'</div></div>'+act+'</li>';
+  });
+  h+='</ul></section>';
+
+  // week
+  h+='<section class="card"><h2>This week</h2><div class="week">';
+  var names=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  for(var i=6;i>=0;i--){
+    var a=shift(p.y,p.m,p.d,-i), k=key(a[0],a[1],a[2]), l=S.log[k]||{};
+    var wd=new Date(Date.UTC(a[0],a[1]-1,a[2])).getUTCDay();
+    h+='<div class="day'+(i===0?" today":"")+'"><b>'+names[wd]+'</b><div class="dots'+(dayCount(k)===5?" perfect":"")+'">';
+    PR.forEach(function(x){var r=l[x.id];h+='<i class="'+(r?(r.ok?"ok":"late"):"")+'"></i>';});
+    h+='</div></div>';
+  }
+  h+='</div><div class="note">Top to bottom: Fajr, Dhuhr, Asr, Maghrib, Isha. Green = on time, gold = qada. Best streak: '+st.best+' days.</div></section>';
+
+  // badges
+  var got=earned(st);
+  h+='<section class="card"><h2>Badges</h2><div class="badges">';
+  BADGES.forEach(function(b){
+    var on=got.indexOf(b.id)>=0;
+    h+='<div class="badge '+(on?"got":"locked")+'"><span class="em">'+b.em+'</span>'+b.name+'</div>';
+  });
+  h+='</div></section>';
+
+  // reminders
+  if(NAT){
+    var on=nperm==="granted";
+    h+='<section class="card"><h2>Reminders</h2>';
+    h+='<div class="set"><span>Background reminders</span><button class="btn sm '+(on?"":"ghost")+'" data-act="notif">'+(on?"On":"Turn on")+'</button></div>';
+    h+='<div class="set"><span>Exact timing</span><button class="btn sm '+(nexact?"":"ghost")+'" data-act="exact">'+(nexact?"On":"Allow")+'</button></div>';
+    h+='<div class="set"><span>Sound effects</span><button class="btn sm '+(S.settings.sound?"":"ghost")+'" data-act="sound">'+(S.settings.sound?"On":"Off")+'</button></div>';
+    h+='<div class="set"><span>Warn me before a prayer ends</span><select data-act="warn">';
+    [10,15,20,30].forEach(function(v){h+='<option value="'+v+'"'+(S.settings.warn===v?" selected":"")+'>'+v+' min</option>';});
+    h+='</select></div>';
+    h+='<div class="set"><span>Try a reminder (arrives in 3 sec)</span><button class="btn sm ghost" data-act="test">Test</button></div>';
+    h+='<div class="note">Reminders are scheduled on your phone for the next 14 days and arrive even when the app is closed. Open the app at least once every two weeks. If reminders go missing, set this app\'s battery usage to <b>Unrestricted</b> / allow auto-start in your phone settings (needed on Xiaomi, Oppo, Vivo, Realme and some Samsung phones).</div></section>';
+  }else{
+    var perm="Notification" in window?Notification.permission:"unsupported";
+    h+='<section class="card"><h2>Reminders</h2>';
+    h+='<div class="set"><span>Phone notifications</span><button class="btn sm '+(S.settings.notif&&perm==="granted"?"":"ghost")+'" data-act="notif">'+(S.settings.notif&&perm==="granted"?"On":"Turn on")+'</button></div>';
+    h+='<div class="set"><span>Sound</span><button class="btn sm '+(S.settings.sound?"":"ghost")+'" data-act="sound">'+(S.settings.sound?"On":"Off")+'</button></div>';
+    h+='<div class="set"><span>Warn me before a prayer ends</span><select data-act="warn">';
+    [10,15,20,30].forEach(function(v){h+='<option value="'+v+'"'+(S.settings.warn===v?" selected":"")+'>'+v+' min</option>';});
+    h+='</select></div>';
+    h+='<div class="set"><span>Try a reminder</span><button class="btn sm ghost" data-act="test">Test</button></div>';
+    h+='<div class="note">Reminders fire while this page is open.</div></section>';
+  }
+
+  h+='<footer>Times are calculated for Dhaka (Karachi method, Hanafi Asr) and can differ by a few minutes from your local mosque or Islamic Foundation timetable. Your progress is saved on this phone only.</footer>';
+
+  document.getElementById("app").innerHTML=h;
+  updateLive(now,ws);
+}
+
+function updateLive(now,ws){
+  var c=current(now,ws), cw=c.cw, nw=c.nw, cd=document.getElementById("cd");
+  var hero=document.getElementById("hero");
+  var title="Salah Streak";
+  if(cw){
+    var left=cw.e-now, total=cw.e-cw.s;
+    if(cd)cd.textContent=fmtCD(left);
+    var bar=document.getElementById("bar");
+    if(bar)bar.style.width=Math.min(100,Math.max(0,(now-cw.s)/total*100))+"%";
+    var urgent=!isDone(cw)&&left<S.settings.warn*60000;
+    if(hero){if(urgent)hero.classList.add("urgent");else hero.classList.remove("urgent");}
+    var bub=document.getElementById("bubble");
+    if(bub&&urgent)bub.textContent="Hurry! Only "+Math.ceil(left/60000)+" min left for "+pinfo(cw.id).name+"! ⏳";
+    var nx=document.getElementById("nx");
+    if(nx&&nw)nx.textContent=fmtCD(nw.s-now);
+    title=pinfo(cw.id).name+" · "+fmtCD(left)+" left";
+  }else if(nw){
+    if(cd)cd.textContent=fmtCD(nw.s-now);
+    title=pinfo(nw.id).name+" in "+fmtCD(nw.s-now);
+  }
+  document.title=title;
+}
+
+function tick(){
+  var now=Date.now(), ws=windowsFor(now);
+  checkReminders(now,ws);
+  var k=stateKey(now), p=dk(now);
+  if(k!==curKey||p.s===0){render();}else{updateLive(now,ws);}
+}
+
+/* ---------- events ---------- */
+document.addEventListener("click",function(ev){
+  var el=ev.target.closest?ev.target.closest("[data-act]"):null;
+  if(!el)return;
+  var act=el.getAttribute("data-act");
+  if(act==="pray"){logPrayer(el.getAttribute("data-day"),el.getAttribute("data-id"));}
+  else if(act==="sound"){S.settings.sound=!S.settings.sound;save();if(S.settings.sound)chime(false);render();}
+  else if(act==="test"){
+    if(NAT){
+      if(nperm!=="granted"){toast("Turn on background reminders first.");return;}
+      window.SalahNative.testNow().then(function(ok){toast(ok?"Test reminder coming in 3 seconds. You can close the app to try it 🔔":"Couldn't schedule the test.");});
+    }else{notify("Test reminder 🕌","This is how your Salah reminders will look.");}
+  }
+  else if(act==="exact"){if(NAT){window.SalahNative.openExactSettings();}}
+  else if(act==="notif"){
+    if(NAT){
+      window.SalahNative.requestPermission().then(function(r){
+        nperm=r;
+        if(r==="granted"){toast("Background reminders on ✅","green");scheduleNative();}
+        else{toast("Notifications are blocked. Enable them in phone Settings → Apps → Salah Streak.");}
+        refreshNative(render);
+      });
+      return;
+    }
+    if(!("Notification" in window)){toast("This browser doesn't support notifications. In-app reminders still work.");return;}
+    if(S.settings.notif&&Notification.permission==="granted"){S.settings.notif=false;save();render();return;}
+    try{
+      var r=Notification.requestPermission(function(res){afterPerm(res);});
+      if(r&&r.then)r.then(afterPerm);
+    }catch(e){toast("Notifications are blocked here. In-app reminders still work.");}
+  }
+});
+function afterPerm(res){
+  if(res==="granted"){S.settings.notif=true;save();toast("Notifications on ✅","green");}
+  else{S.settings.notif=false;save();toast("Notifications not allowed. In-app reminders still work.");}
+  render();
+}
+document.addEventListener("change",function(ev){
+  var el=ev.target;
+  if(el&&el.getAttribute&&el.getAttribute("data-act")==="warn"){
+    S.settings.warn=parseInt(el.value,10)||15;save();scheduleNative();render();
+  }
+});
+
+render();
+refreshNative(function(){render();scheduleNative();});
+setInterval(tick,1000);
+document.addEventListener("visibilitychange",function(){if(!document.hidden){tick();refreshNative(function(){render();scheduleNative();});}});
+if(NAT){window.SalahNative.onResume(function(){refreshNative(function(){render();scheduleNative();});});}
+})();
+</script>
+</body>
+</html>

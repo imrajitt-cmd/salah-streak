@@ -1,0 +1,14 @@
+{
+  "appId": "com.ryuu.salahstreak",
+  "appName": "Salah Streak",
+  "webDir": "www",
+  "android": {
+    "allowMixedContent": false
+  },
+  "plugins": {
+    "LocalNotifications": {
+      "smallIcon": "ic_stat_salah",
+      "iconColor": "#58CC02"
+    }
+  }
+}
