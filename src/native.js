@@ -3,6 +3,7 @@
 import { Capacitor } from "@capacitor/core";
 import { LocalNotifications } from "@capacitor/local-notifications";
 import { App } from "@capacitor/app";
+import { Browser } from "@capacitor/browser";
 
 const CHANNEL = "salah-reminders";
 
@@ -89,6 +90,10 @@ window.SalahNative = {
       });
       return true;
     } catch (e) { return false; }
+  },
+
+  async openUrl(url) {
+    try { await Browser.open({ url }); return true; } catch (e) { return false; }
   },
 
   onResume(fn) {

@@ -1,0 +1,1 @@
+First signed release. From now on updates install over the old version and keep your progress.

@@ -102,6 +102,7 @@ ul{list-style:none;margin:0;padding:0}
 .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:55}
 .confetti i{position:absolute;top:-14px;width:8px;height:13px;border-radius:2px;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
+.upd{border-color:var(--green)}
 footer{font-size:12px;color:var(--muted);text-align:center;line-height:1.5;margin-top:6px}
 </style>
 </head>
@@ -123,12 +124,16 @@ var PR=[
   {id:"isha",name:"Isha",bn:"এশা",icon:"🌙"}
 ];
 var KEY="salah_streak_v1";
+var APP_VERSION=parseInt("__APP_VERSION__",10)||0;
+var STORE_BUILD="__STORE_BUILD__"==="1";
+var REPO="imrajitt-cmd/salah-streak";
+function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 
 /* ---------- storage (always guarded) ---------- */
 var mem={};
 function sget(k){try{return window.localStorage.getItem(k);}catch(e){return mem[k]==null?null:mem[k];}}
 function sset(k,v){try{window.localStorage.setItem(k,v);}catch(e){mem[k]=v;}}
-var S={log:{},settings:{notif:false,sound:true,warn:15},notified:{},badges:[]};
+var S={log:{},settings:{notif:false,sound:true,warn:15},notified:{},badges:[],update:null,lastCheck:0,dismissed:0};
 try{
   var raw=sget(KEY);
   if(raw){
@@ -138,6 +143,7 @@ try{
       S.settings=Object.assign(S.settings,p.settings||{});
       S.notified=p.notified||{};
       S.badges=p.badges||[];
+      S.update=p.update||null;S.lastCheck=p.lastCheck||0;S.dismissed=p.dismissed||0;
     }
   }
 }catch(e){}
@@ -358,6 +364,27 @@ function scheduleNative(){
   });
 }
 
+/* ---------- app updates (direct-download APK only; never in store builds) ---------- */
+function updateInfo(){
+  if(!NAT||STORE_BUILD||!S.update||S.update.n<=APP_VERSION||S.dismissed>=S.update.n)return null;
+  return S.update;
+}
+function checkUpdate(force){
+  if(!NAT||STORE_BUILD)return;
+  var now=Date.now();
+  if(!force&&now-S.lastCheck<6*3600000)return;
+  S.lastCheck=now;save();
+  fetch("https://api.github.com/repos/"+REPO+"/releases/latest",{headers:{"Accept":"application/vnd.github+json"}})
+    .then(function(r){if(!r.ok)throw new Error("http");return r.json();})
+    .then(function(j){
+      var n=parseInt(String(j.tag_name||"").replace(/\D/g,""),10)||0;
+      var apk=(j.assets||[]).filter(function(a){return /\.apk$/i.test(a.name);})[0];
+      if(n>APP_VERSION&&apk){S.update={n:n,url:apk.browser_download_url,notes:String(j.body||"").slice(0,600)};}
+      else{S.update=null;}
+      save();render();
+    }).catch(function(){});
+}
+
 /* ---------- reminders ---------- */
 function notify(title,body){
   toast(title+" — "+body,"gold");
@@ -436,6 +463,9 @@ function render(){
 
   h+='<header><div class="brand">🕌 Salah Streak<small>Dhaka, Bangladesh · '+p.d+"/"+p.m+"/"+p.y+'</small></div>'+
      '<div class="chips"><span class="chip flame">🔥 '+st.streak+'</span><span class="chip xp">⚡ '+st.xp+'</span></div></header>';
+
+  var up=updateInfo();
+  if(up){h+='<section class="card upd"><h2>🎁 Update available · v'+up.n+'</h2><div class="note" style="margin:0 0 4px;white-space:pre-wrap">'+esc(up.notes||"A new version is ready.")+'</div><button class="btn" data-act="upd-get">Download update</button><button class="btn ghost" data-act="upd-later">Later</button></section>';}
 
   h+='<div class="lvl"><b>Level '+st.level+'</b><div class="bar gold"><i style="width:'+(st.xp%100)+'%"></i></div><span class="tm" style="font-size:12px;color:var(--muted)">'+(st.xp%100)+'/100</span></div>';
 
@@ -529,7 +559,7 @@ function render(){
     h+='<div class="note">Reminders fire while this page is open.</div></section>';
   }
 
-  h+='<footer>Times are calculated for Dhaka (Karachi method, Hanafi Asr) and can differ by a few minutes from your local mosque or Islamic Foundation timetable. Your progress is saved on this phone only.</footer>';
+  h+='<footer>Times are calculated for Dhaka (Karachi method, Hanafi Asr) and can differ by a few minutes from your local mosque or Islamic Foundation timetable. Your progress is saved on this phone only. · Version '+APP_VERSION+'</footer>';
 
   document.getElementById("app").innerHTML=h;
   updateLive(now,ws);
@@ -571,6 +601,8 @@ document.addEventListener("click",function(ev){
   if(!el)return;
   var act=el.getAttribute("data-act");
   if(act==="pray"){logPrayer(el.getAttribute("data-day"),el.getAttribute("data-id"));}
+  else if(act==="upd-get"){var u=updateInfo();if(u&&NAT){window.SalahNative.openUrl(u.url);}}
+  else if(act==="upd-later"){var u2=updateInfo();if(u2){S.dismissed=u2.n;save();render();}}
   else if(act==="sound"){S.settings.sound=!S.settings.sound;save();if(S.settings.sound)chime(false);render();}
   else if(act==="test"){
     if(NAT){
@@ -611,9 +643,10 @@ document.addEventListener("change",function(ev){
 
 render();
 refreshNative(function(){render();scheduleNative();});
+checkUpdate(false);
 setInterval(tick,1000);
 document.addEventListener("visibilitychange",function(){if(!document.hidden){tick();refreshNative(function(){render();scheduleNative();});}});
-if(NAT){window.SalahNative.onResume(function(){refreshNative(function(){render();scheduleNative();});});}
+if(NAT){window.SalahNative.onResume(function(){refreshNative(function(){render();scheduleNative();});checkUpdate(false);});}
 })();
 </script>
 </body>

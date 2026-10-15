@@ -1,33 +1,23 @@
 # Salah Streak (Android)
 
-Prayer times for Dhaka, a live countdown for the current prayer, streaks / XP / badges,
-and **real reminders that fire even when the app is closed** (scheduled on the phone for the next 14 days).
+## How releases work
+Every time you push a change to GitHub, the "Build and release APK" workflow builds a signed APK
+and publishes it as a numbered release (v1, v2, v3...). The app checks for a newer release when opened
+and shows an "Update available" card with a Download button.
 
-## Get the APK (no Android Studio needed)
+To describe an update, edit `whatsnew.txt` before you push. Its text is shown in the update card.
 
-1. Create a free account at https://github.com and make a **new repository** (Private is fine).
-2. Click **uploading an existing file** and drag in **everything from this folder**,
-   including the hidden `.github` folder. Commit to the `main` branch.
-   - If `.github/workflows/build-apk.yml` did not upload (macOS hides dot-folders; press Cmd+Shift+. in Finder),
-     click **Add file → Create new file**, type the name `.github/workflows/build-apk.yml`,
-     and paste the contents of that file.
-3. Open the repo's **Actions** tab. The "Build Android APK" job starts by itself (about 5 to 8 minutes).
-   If it doesn't, open it and press **Run workflow**.
-4. When it turns green, open the run and download **salah-streak-apk** from *Artifacts*. Unzip it to get `app-debug.apk`.
-5. Send the APK to your phone and install it. Android will ask you to allow "install unknown apps" for your browser or file manager.
+## One-time setup
+1. Repo > Settings > Secrets and variables > Actions > New repository secret. Add three secrets from
+   KEEP-PRIVATE-signing-secrets.txt: KEY_ALIAS, KEYSTORE_PASSWORD, KEYSTORE_BASE64.
+2. Upload these files to the repo (drag them in, overwriting the old ones).
+3. Edit `.github/workflows/build-apk.yml` on GitHub and paste in the new contents.
+4. Open the Actions tab, wait for the green check, then open the repo's Releases section on the right
+   and download the APK from Assets.
+5. Uninstall the old app once, then install this APK. Updates install over it from now on.
 
-## First launch on the phone
+Keep the repository Public: the app reads releases without a login.
 
-1. Reminders → **Turn on** (allow notifications).
-2. Reminders → **Exact timing → Allow** (Android 12+ "Alarms & reminders"), so reminders arrive on the minute.
-3. Tap **Test** and close the app. A notification should arrive in 3 seconds.
-4. Set battery for the app to **Unrestricted** and allow auto-start (Xiaomi, Oppo, Vivo, Realme, some Samsung),
-   otherwise the phone may cancel reminders when it cleans up background apps.
-
-Open the app at least once every two weeks so it can schedule the next 14 days.
-
-## Notes
-- Times: Karachi method (Fajr and Isha 18°), Hanafi Asr, for Dhaka. Compare with your local mosque for the first few days.
-- Progress is stored on the phone only.
-- To change the location, edit `LAT`, `LNG`, `TZ` in `src/index.html`.
-- Using Android Studio instead: `npm ci && npm run build && npx cap add android && python tools/make_icons.py android/app/src/main/res && npx cap sync android && npx cap open android`
+## Store builds
+Google Play does not allow apps to download updates from outside the store. Store builds are made with
+STORE_BUILD=1, which switches the update card off (handled in the store-submission step).
