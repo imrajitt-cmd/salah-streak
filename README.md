@@ -15,6 +15,9 @@ The signing key stays the same, so the update installs over the old app and keep
 
 Keep the repository Public: the app reads releases without a login.
 
+## Languages
+All text lives in `src/i18n.js`. To add a language, copy the `en` block, translate it, and add one line to `I18N_LANGS` at the top.
+
 ## What is generated at build time
 `tools/make_icons.py` creates the app icon, splash screens, the two notification sounds
 and adds the approximate-location permission to the Android manifest.

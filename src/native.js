@@ -93,14 +93,14 @@ window.SalahNative = {
     } catch (e) { return false; }
   },
 
-  async testNow(urgent) {
+  async testNow(urgent, title, body) {
     try {
       await ensureChannels();
       await LocalNotifications.schedule({
         notifications: [toNotification({
           id: urgent ? 999998 : 999999,
-          title: urgent ? "🚨 Last chance for Asr!" : "Test reminder 🕌",
-          body: urgent ? "Only 5 min left! Salah time is almost over, pray right now!" : "This is how your Salah reminders will look.",
+          title: title || (urgent ? "Last chance!" : "Test reminder"),
+          body: body || "",
           at: Date.now() + 3000,
           urgent: !!urgent,
         })],

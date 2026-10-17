@@ -28,8 +28,10 @@
 }
 *,*::before,*::after{box-sizing:inherit}
 html,body{margin:0;background:var(--bg);color:var(--ink);
-  font-family:"Nunito",ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Bengali",sans-serif;
+  font-family:"Nunito",ui-rounded,system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans Bengali","Noto Naskh Arabic",sans-serif;
   font-weight:700;-webkit-font-smoothing:antialiased}
+html[lang="bn"],html[lang="ar"],html[lang="ur"]{line-height:1.6}
+html[lang="ar"] *,html[lang="ur"] *{letter-spacing:0 !important}
 body{min-height:100%}
 #app{max-width:520px;margin:0 auto;padding:14px 14px 40px}
 header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
@@ -53,12 +55,14 @@ header{display:flex;align-items:center;justify-content:space-between;gap:10px;ma
 @keyframes bob{50%{transform:translateY(-6px) rotate(-6deg)}}
 .bubble{position:relative;background:var(--soft);border-radius:16px;padding:10px 14px;font-size:15px;flex:1}
 .bubble::before{content:"";position:absolute;left:-8px;top:50%;margin-top:-8px;border:8px solid transparent;border-left:0;border-right-color:var(--soft)}
+[dir="rtl"] .bubble::before{left:auto;right:-8px;border-right:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:8px solid var(--soft)}
 .hero .label{font-size:13px;text-transform:uppercase;letter-spacing:.07em;color:var(--muted);font-weight:900}
-.hero .pname{font-size:32px;font-weight:900;line-height:1.1;margin:2px 0 0}
-.hero .pname small{font-size:18px;color:var(--muted);font-weight:700;margin-left:6px}
-.cd{font-size:44px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em;margin:6px 0 8px}
+.hero .pname{font-size:32px;font-weight:900;line-height:1.15;margin:2px 0 0}
+.hero .pname small{font-size:18px;color:var(--muted);font-weight:700;margin-inline-start:6px}
+.cd{font-size:44px;font-weight:900;font-variant-numeric:tabular-nums;letter-spacing:-.02em;margin:6px 0 8px;direction:ltr;text-align:start}
+[dir="rtl"] .cd{text-align:right}
 .hero.urgent .cd{color:var(--red)}
-.meta{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);margin-top:6px}
+.meta{display:flex;justify-content:space-between;gap:8px;font-size:13px;color:var(--muted);margin-top:6px}
 .next{margin-top:12px;padding-top:12px;border-top:2px dashed var(--line);font-size:14px;color:var(--muted)}
 .next b{color:var(--ink)}
 .btn{font:inherit;font-weight:900;text-transform:uppercase;letter-spacing:.05em;font-size:14px;border:0;border-radius:14px;
@@ -75,7 +79,7 @@ ul{list-style:none;margin:0;padding:0}
 .row .ic{font-size:26px;width:36px;text-align:center}
 .row .nm{flex:1;min-width:0}
 .row .nm b{font-weight:900;font-size:17px}
-.row .nm small{color:var(--muted);margin-left:4px}
+.row .nm small{color:var(--muted);margin-inline-start:4px}
 .row .tm{font-size:13px;color:var(--muted)}
 .row.cur{background:var(--soft);margin:0 -10px;padding:11px 10px;border-radius:14px;border-bottom:0}
 .row.opt .nm b{color:#5b6cff}
@@ -91,7 +95,7 @@ ul{list-style:none;margin:0;padding:0}
 .dots i.tahoff{width:10px;height:10px;margin-top:3px;opacity:.5}
 .dots.perfect{filter:drop-shadow(0 0 4px var(--green))}
 .badges{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-.badge{text-align:center;font-size:11px;line-height:1.2;color:var(--muted)}
+.badge{text-align:center;font-size:11px;line-height:1.25;color:var(--muted)}
 .badge .em{font-size:30px;display:block;margin-bottom:2px}
 .badge.locked .em{filter:grayscale(1);opacity:.35}
 .badge.got{color:var(--ink)}
@@ -101,12 +105,13 @@ ul{list-style:none;margin:0;padding:0}
 .note{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:8px;font-weight:700}
 .locrow{display:flex;gap:8px;align-items:center;margin:8px 0}
 .locin{flex:1;min-width:0;font:inherit;font-weight:700;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
-.res{display:block;width:100%;text-align:left;font:inherit;font-weight:700;padding:10px 12px;margin-top:6px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.res{display:block;width:100%;text-align:start;font:inherit;font-weight:700;padding:10px 12px;margin-top:6px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
 .res:active{background:var(--soft)}
 .chipsrow{display:flex;flex-wrap:wrap;gap:8px;padding:6px 0 4px}
 .chipb{font:inherit;font-weight:900;font-size:13px;padding:8px 12px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer}
 .chipb.on{background:var(--soft);border-color:var(--green);color:var(--green-d)}
 .upd{border-color:var(--green)}
+.pick .res{text-align:center;font-size:19px;padding:14px 12px}
 #toasts{position:fixed;left:0;right:0;top:calc(var(--safe-area-inset-top,env(safe-area-inset-top,0px)) + 10px);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:60;pointer-events:none}
 .toast{background:#17302a;color:#fff;border-radius:14px;padding:10px 16px;font-weight:800;font-size:14px;max-width:92%;box-shadow:0 6px 20px rgba(0,0,0,.25);animation:pop .35s ease}
 .toast.gold{background:var(--gold);color:#4a3600}
@@ -123,31 +128,44 @@ footer{font-size:12px;color:var(--muted);text-align:center;line-height:1.5;margi
 <div id="app"></div>
 
 <script src="native.js"></script>
+<script src="i18n.js"></script>
 <script>
 (function(){
 "use strict";
 /* ---------- constants ---------- */
-var PR=[
-  {id:"fajr",name:"Fajr",bn:"ফজর",icon:"🌅"},
-  {id:"dhuhr",name:"Dhuhr",bn:"যোহর",icon:"☀️"},
-  {id:"asr",name:"Asr",bn:"আসর",icon:"🌤️"},
-  {id:"maghrib",name:"Maghrib",bn:"মাগরিব",icon:"🌇"},
-  {id:"isha",name:"Isha",bn:"এশা",icon:"🌙"}
-];
-var TAH={id:"tahajjud",name:"Tahajjud",bn:"তাহাজ্জুদ",icon:"🌌"};
+var PR=[{id:"fajr",icon:"🌅"},{id:"dhuhr",icon:"☀️"},{id:"asr",icon:"🌤️"},{id:"maghrib",icon:"🌇"},{id:"isha",icon:"🌙"}];
+var ICONS={fajr:"🌅",dhuhr:"☀️",asr:"🌤️",maghrib:"🌇",isha:"🌙",jumuah:"🕌",tahajjud:"🌌"};
 var KEY="salah_streak_v1";
 var APP_VERSION=parseInt("__APP_VERSION__",10)||0;
 var STORE_BUILD="__STORE_BUILD__"==="1";
 var REPO="imrajitt-cmd/salah-streak";
-var DEFAULT_LOC={name:"Dhaka, Bangladesh",lat:23.8103,lng:90.4125,tz:"Asia/Dhaka"};
+var DEFAULT_LOC={name:"Dhaka, Bangladesh",lat:23.8103,lng:90.4125,tz:"Asia/Dhaka",cc:"BD"};
 var WARN_OPTS=[30,20,15,10,5];
+var XP_ON=10,XP_JUM=15,XP_LATE=3,XP_TAH=25;
+var LANGS=window.I18N_LANGS||[{code:"en",name:"English",dir:"ltr"}];
+var TR=window.I18N||{en:{}};
+var DIG=window.I18N_DIGITS||{};
+var ARN=window.I18N_ARABIC_NAMES||{};
+var SEC_LANGS={en:1,id:1,ms:1,tr:1,fr:1};
+// Fajr/Isha angles per method. The method is chosen automatically from the location.
 var METHODS={
-  karachi:{name:"Karachi (Univ. of Islamic Sciences)",fajr:18,isha:18},
-  mwl:{name:"Muslim World League",fajr:18,isha:17},
-  isna:{name:"ISNA (North America)",fajr:15,isha:15},
-  egypt:{name:"Egyptian General Authority",fajr:19.5,isha:17.5},
-  makkah:{name:"Umm al-Qura (Makkah)",fajr:18.5,ishaMin:90},
-  turkey:{name:"Diyanet (Turkey)",fajr:18,isha:17}
+  karachi:{fajr:18,isha:18},
+  mwl:{fajr:18,isha:17},
+  isna:{fajr:15,isha:15},
+  egypt:{fajr:19.5,isha:17.5},
+  makkah:{fajr:18.5,ishaMin:90},
+  turkey:{fajr:18,isha:17},
+  sea:{fajr:20,isha:18}
+};
+var CC_METHOD={
+  BD:["karachi","hanafi"],IN:["karachi","hanafi"],PK:["karachi","hanafi"],AF:["karachi","hanafi"],NP:["karachi","hanafi"],
+  LK:["karachi","standard"],MV:["karachi","standard"],MY:["karachi","standard"],
+  TR:["turkey","standard"],
+  SA:["makkah","standard"],YE:["makkah","standard"],OM:["makkah","standard"],AE:["makkah","standard"],KW:["makkah","standard"],QA:["makkah","standard"],BH:["makkah","standard"],
+  EG:["egypt","standard"],SD:["egypt","standard"],LY:["egypt","standard"],SY:["egypt","standard"],LB:["egypt","standard"],IQ:["egypt","standard"],JO:["egypt","standard"],PS:["egypt","standard"],
+  ID:["sea","standard"],SG:["sea","standard"],BN:["sea","standard"],
+  US:["isna","standard"],CA:["isna","standard"],
+  UZ:["mwl","hanafi"],TJ:["mwl","hanafi"],KG:["mwl","hanafi"],TM:["mwl","hanafi"],KZ:["mwl","hanafi"]
 };
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 
@@ -156,7 +174,8 @@ var mem={};
 function sget(k){try{return window.localStorage.getItem(k);}catch(e){return mem[k]==null?null:mem[k];}}
 function sset(k,v){try{window.localStorage.setItem(k,v);}catch(e){mem[k]=v;}}
 var S={log:{},settings:{notif:false,sound:true,warns:[30,15,5],tahNotif:false},notified:{},badges:[],
-  update:null,lastCheck:0,dismissed:0,loc:null,locSet:false,method:"karachi",asr:"hanafi",manual:false};
+  update:null,lastCheck:0,dismissed:0,loc:null,locSet:false,method:"karachi",asr:"hanafi",
+  lang:null,digits:"latn",h24:null,friday:"jumuah",mosque:""};
 try{
   var raw=sget(KEY);
   if(raw){
@@ -173,9 +192,11 @@ try{
       S.badges=p0.badges||[];
       S.update=p0.update||null;S.lastCheck=p0.lastCheck||0;S.dismissed=p0.dismissed||0;
       S.loc=p0.loc||null;S.locSet=!!p0.locSet;
-      S.method=METHODS[p0.method]?p0.method:"karachi";
-      S.asr=p0.asr==="standard"?"standard":"hanafi";
-      S.manual=!!p0.manual;
+      S.lang=(p0.lang&&TR[p0.lang])?p0.lang:null;
+      S.digits=p0.digits==="local"?"local":"latn";
+      S.h24=typeof p0.h24==="boolean"?p0.h24:null;
+      S.friday=p0.friday==="dhuhr"?"dhuhr":"jumuah";
+      S.mosque=/^\d\d:\d\d$/.test(p0.mosque||"")?p0.mosque:"";
     }
   }
 }catch(e){}
@@ -184,12 +205,46 @@ try{
   w=w.filter(function(v,i){return w.indexOf(v)===i;}).sort(function(a,b){return b-a;});
   S.settings.warns=w;
   var l=S.loc;
-  if(!l||typeof l.lat!=="number"||typeof l.lng!=="number"||typeof l.tz!=="string"||!l.name){S.loc={name:DEFAULT_LOC.name,lat:DEFAULT_LOC.lat,lng:DEFAULT_LOC.lng,tz:DEFAULT_LOC.tz};}
+  if(!l||typeof l.lat!=="number"||typeof l.lng!=="number"||typeof l.tz!=="string"||!l.name){
+    S.loc={name:DEFAULT_LOC.name,lat:DEFAULT_LOC.lat,lng:DEFAULT_LOC.lng,tz:DEFAULT_LOC.tz,cc:DEFAULT_LOC.cc};
+  }
 })();
 function save(){
   var keys=Object.keys(S.notified);
   if(keys.length>200){keys.sort();keys.slice(0,keys.length-200).forEach(function(k){delete S.notified[k];});}
   sset(KEY,JSON.stringify(S));
+}
+
+/* ---------- language ---------- */
+function guessLang(){
+  var l="en";
+  try{l=(navigator.language||"en").slice(0,2).toLowerCase();}catch(e){}
+  return TR[l]?l:"en";
+}
+function curLang(){return S.lang||guessLang();}
+function t(k,v){
+  var L=TR[curLang()]||TR.en, s=(L&&L[k]!=null)?L[k]:TR.en[k];
+  if(s==null)return k;
+  if(typeof s!=="string")return s;
+  return v?s.replace(/\{(\w+)\}/g,function(m,n){return v[n]!=null?v[n]:m;}):s;
+}
+function langMeta(){var c=curLang();for(var i=0;i<LANGS.length;i++){if(LANGS[i].code===c)return LANGS[i];}return LANGS[0];}
+function D(s){
+  s=String(s);
+  var map=DIG[curLang()];
+  if(S.digits!=="local"||!map)return s;
+  return s.replace(/[0-9]/g,function(d){return map.charAt(+d);});
+}
+function N(x){return D(String(x));}
+function applyLang(){
+  var m=langMeta();
+  document.documentElement.lang=m.code;
+  document.documentElement.dir=m.dir;
+}
+function pad(n){return (n<10?"0":"")+n;}
+function pinfo(id,jum){
+  var k=jum?"jumuah":id;
+  return {id:id,name:t("p_"+k),sec:SEC_LANGS[curLang()]?(ARN[k]||""):"",icon:ICONS[k]};
 }
 
 /* ---------- prayer time maths ---------- */
@@ -204,11 +259,11 @@ function julian(y,m,d){
   return Math.floor(365.25*(y+4716))+Math.floor(30.6001*(m+1))+d+B-1524.5;
 }
 function sunPos(jd){
-  var D=jd-2451545.0;
-  var g=fixA(357.529+0.98560028*D);
-  var q=fixA(280.459+0.98564736*D);
+  var D0=jd-2451545.0;
+  var g=fixA(357.529+0.98560028*D0);
+  var q=fixA(280.459+0.98564736*D0);
   var L=fixA(q+1.915*sin(g)+0.020*sin(2*g));
-  var e=23.439-0.00000036*D;
+  var e=23.439-0.00000036*D0;
   var RA=fixH(Math.atan2(cos(e)*sin(L),cos(L))/rad/15);
   return {decl:Math.asin(sin(e)*sin(L))/rad, eqt:q/15-RA};
 }
@@ -223,6 +278,21 @@ function tzOff(tz,ms){
     return Math.round((asUTC-Math.floor(ms/1000)*1000)/60000);
   }catch(e){return -new Date(ms).getTimezoneOffset();}
 }
+// The calculation method is picked automatically from the location (nobody has to choose).
+function autoMethod(lat,lng,cc){
+  cc=(cc||"").toUpperCase();
+  if(CC_METHOD[cc])return {m:CC_METHOD[cc][0],asr:CC_METHOD[cc][1]};
+  if(lat>=22&&lat<=32&&lng>=24&&lng<=34.9)return {m:"egypt",asr:"standard"};
+  if(lat>=12&&lat<=33&&lng>=34&&lng<=60)return {m:"makkah",asr:"standard"};
+  if(lat>=5&&lat<=37&&lng>=60&&lng<=93)return {m:"karachi",asr:"hanafi"};
+  if(lat>=-11&&lat<=8&&lng>=95&&lng<=141)return {m:"sea",asr:"standard"};
+  if(lat>=36&&lat<=42&&lng>=26&&lng<=45)return {m:"turkey",asr:"standard"};
+  if(lat>=14&&lat<=72&&lng>=-170&&lng<=-50)return {m:"isna",asr:"standard"};
+  return {m:"mwl",asr:"standard"};
+}
+function applyAuto(){var a=autoMethod(S.loc.lat,S.loc.lng,S.loc.cc);S.method=a.m;S.asr=a.asr;}
+applyAuto();
+
 var tcache={};
 function times(y,m,d){
   var LAT=S.loc.lat, LNG=S.loc.lng;
@@ -230,18 +300,18 @@ function times(y,m,d){
   if(tcache[ck])return tcache[ck];
   var M=METHODS[S.method]||METHODS.karachi;
   var jd=julian(y,m,d)-LNG/(15*24);
-  function mid(t){return fixH(12-sunPos(jd+t).eqt);}
-  function ang(a,t,ccw){
-    var dec=sunPos(jd+t).decl;
+  function mid(tt){return fixH(12-sunPos(jd+tt).eqt);}
+  function ang(a,tt,ccw){
+    var dec=sunPos(jd+tt).decl;
     var x=(-sin(a)-sin(dec)*sin(LAT))/(cos(dec)*cos(LAT));
     if(x<-1||x>1)return NaN;
-    var v=Math.acos(x)/rad/15, n=mid(t);
+    var v=Math.acos(x)/rad/15, n=mid(tt);
     return ccw?n-v:n+v;
   }
-  function asr(f,t){
-    var dec=sunPos(jd+t).decl;
+  function asr(f,tt){
+    var dec=sunPos(jd+tt).decl;
     var a=-Math.atan(1/(f+Math.tan(Math.abs(LAT-dec)*rad)))/rad;
-    return ang(a,t,false);
+    return ang(a,tt,false);
   }
   var h={
     fajr:ang(M.fajr,5/24,true),
@@ -251,13 +321,11 @@ function times(y,m,d){
     sunset:ang(0.833,18/24,false),
     isha:M.ishaMin?0:ang(M.isha,18/24,false)
   };
-  // polar day / night fallbacks
   if(isNaN(h.sunrise))h.sunrise=h.dhuhr-6;
   if(isNaN(h.sunset))h.sunset=h.dhuhr+6;
   var night=fixH(h.sunrise-h.sunset);
   if(night<1)night=12;
   function portion(a){return a/60*night;}
-  // high latitudes: angle-based rule (never leave Fajr or Isha undefined)
   if(isNaN(h.fajr)||fixH(h.sunrise-h.fajr)>portion(M.fajr))h.fajr=h.sunrise-portion(M.fajr);
   if(M.ishaMin){h.isha=h.sunset+M.ishaMin/60;}
   else if(isNaN(h.isha)||fixH(h.isha-h.sunset)>portion(M.isha)){h.isha=h.sunset+portion(M.isha);}
@@ -266,7 +334,6 @@ function times(y,m,d){
   Object.keys(h).forEach(function(k){
     out[k]=Math.round((Date.UTC(y,m-1,d)+(h[k]-LNG/15)*3600000)/60000)*60000;
   });
-  // keep the instants on the civil date of the chosen time zone
   var off=tzOff(S.loc.tz,out.dhuhr);
   var localDay=Math.floor((out.dhuhr+off*60000)/86400000);
   var want=Math.round(Date.UTC(y,m-1,d)/86400000);
@@ -275,38 +342,41 @@ function times(y,m,d){
   tcache[ck]=out;
   return out;
 }
-function suggestMethod(lat,lng){
-  if(lat>=22&&lat<=32&&lng>=24&&lng<=34.9)return {m:"egypt",asr:"standard"};
-  if(lat>=12&&lat<=33&&lng>=34&&lng<=60)return {m:"makkah",asr:"standard"};
-  if(lat>=5&&lat<=37&&lng>=60&&lng<=93)return {m:"karachi",asr:"hanafi"};
-  if(lat>=36&&lat<=42&&lng>=26&&lng<=45)return {m:"turkey",asr:"standard"};
-  if(lat>=14&&lat<=72&&lng>=-170&&lng<=-50)return {m:"isna",asr:"standard"};
-  return {m:"mwl",asr:"standard"};
-}
 
 /* ---------- date helpers (in the chosen city's time zone) ---------- */
 function dk(ms){
   var off=tzOff(S.loc.tz,ms), d=new Date(ms+off*60000);
   return {y:d.getUTCFullYear(),m:d.getUTCMonth()+1,d:d.getUTCDate(),h:d.getUTCHours(),mi:d.getUTCMinutes(),s:d.getUTCSeconds(),wd:d.getUTCDay()};
 }
-function pad(n){return (n<10?"0":"")+n;}
 function key(y,m,d){return y+"-"+pad(m)+"-"+pad(d);}
-function shift(y,m,d,n){var t=new Date(Date.UTC(y,m-1,d+n));return [t.getUTCFullYear(),t.getUTCMonth()+1,t.getUTCDate()];}
-function fmtT(ms){var p=dk(ms),h=p.h%12||12;return h+":"+pad(p.mi)+" "+(p.h<12?"AM":"PM");}
+function shift(y,m,d,n){var tt=new Date(Date.UTC(y,m-1,d+n));return [tt.getUTCFullYear(),tt.getUTCMonth()+1,tt.getUTCDate()];}
+function isFri(y,m,d){return new Date(Date.UTC(y,m-1,d)).getUTCDay()===5;}
+function fmtHM(h,mi){
+  var s;
+  if(S.h24){s=pad(h)+":"+pad(mi);}
+  else{var hh=h%12||12;s=hh+":"+pad(mi)+" "+(h<12?t("am"):t("pm"));}
+  return D(s);
+}
+function fmtT(ms){var p=dk(ms);return fmtHM(p.h,p.mi);}
 function fmtCD(ms){
   ms=Math.max(0,ms);var s=Math.floor(ms/1000);
-  return pad(Math.floor(s/3600))+":"+pad(Math.floor(s%3600/60))+":"+pad(s%60);
+  return D(pad(Math.floor(s/3600))+":"+pad(Math.floor(s%3600/60))+":"+pad(s%60));
 }
-function pinfo(id){return id==="tahajjud"?TAH:PR.filter(function(x){return x.id===id;})[0];}
+function localMs(y,m,d,hh,mm){
+  var g=Date.UTC(y,m-1,d,hh,mm), off=tzOff(S.loc.tz,g), ms=g-off*60000, off2=tzOff(S.loc.tz,ms);
+  if(off2!==off)ms=g-off2*60000;
+  return ms;
+}
 
 function dayWindows(y,m,d){
-  var b=shift(y,m,d,1), t=times(y,m,d), tn=times(b[0],b[1],b[2]), k=key(y,m,d);
+  var b=shift(y,m,d,1), tm=times(y,m,d), tn=times(b[0],b[1],b[2]), k=key(y,m,d);
+  var jum=S.friday==="jumuah"&&isFri(y,m,d);
   return [
-    {day:k,id:"fajr",s:t.fajr,e:t.sunrise},
-    {day:k,id:"dhuhr",s:t.dhuhr,e:t.asr},
-    {day:k,id:"asr",s:t.asr,e:t.sunset},
-    {day:k,id:"maghrib",s:t.sunset,e:t.isha},
-    {day:k,id:"isha",s:t.isha,e:tn.fajr}
+    {day:k,id:"fajr",s:tm.fajr,e:tm.sunrise},
+    {day:k,id:"dhuhr",s:tm.dhuhr,e:tm.asr,jum:jum},
+    {day:k,id:"asr",s:tm.asr,e:tm.sunset},
+    {day:k,id:"maghrib",s:tm.sunset,e:tm.isha},
+    {day:k,id:"isha",s:tm.isha,e:tn.fajr}
   ];
 }
 function windowsFor(now){
@@ -319,8 +389,8 @@ function windowsFor(now){
 }
 // Tahajjud: last third of the night (Maghrib to the next Fajr), up to Fajr
 function tahWindow(y,m,d){
-  var b=shift(y,m,d,1), t=times(y,m,d), tn=times(b[0],b[1],b[2]);
-  var night=tn.fajr-t.sunset;
+  var b=shift(y,m,d,1), tm=times(y,m,d), tn=times(b[0],b[1],b[2]);
+  var night=tn.fajr-tm.sunset;
   return {day:key(y,m,d),id:"tahajjud",s:Math.round((tn.fajr-night/3)/60000)*60000,e:tn.fajr};
 }
 function tahWindows(now){
@@ -330,32 +400,33 @@ function tahWindows(now){
 }
 function isDone(w){return !!(S.log[w.day]&&S.log[w.day][w.id]);}
 function dayCount(k){var l=S.log[k]||{};return PR.filter(function(x){return l[x.id];}).length;}
+function winXp(w){return w.jum?XP_JUM:XP_ON;}
 
 /* ---------- stats, XP, badges ---------- */
-function runs(keys,pred){
+function runs(keys,pred,step){
   var res=[],run=0,prev=null;
   keys.forEach(function(k){
     if(!pred(k)){if(run)res.push(run);run=0;prev=null;return;}
-    var t=Date.parse(k+"T00:00:00Z");
-    if(prev!==null&&t-prev===86400000)run++;else{if(run)res.push(run);run=1;}
-    prev=t;
+    var tt=Date.parse(k+"T00:00:00Z");
+    if(prev!==null&&tt-prev===step)run++;else{if(run)res.push(run);run=1;}
+    prev=tt;
   });
   if(run)res.push(run);
   return res;
 }
 function maxOf(a){return a.length?Math.max.apply(null,a):0;}
 function stats(){
-  var xp=0,prayers=0,onTime=0,fajrOn=0,perfect=0,tah=0;
+  var xp=0,prayers=0,onTime=0,fajrOn=0,perfect=0,tah=0,DAY=86400000;
   var keys=Object.keys(S.log).sort();
   keys.forEach(function(k){
     var l=S.log[k],c=0;
     PR.forEach(function(x){
       var r=l[x.id];if(!r)return;
       c++;prayers++;
-      if(r.ok){xp+=10;onTime++;if(x.id==="fajr")fajrOn++;}else{xp+=3;}
+      if(r.ok){xp+=(r.j?XP_JUM:XP_ON);onTime++;if(x.id==="fajr")fajrOn++;}else{xp+=XP_LATE;}
     });
     if(c===5){perfect++;xp+=20;}
-    if(l.tahajjud){tah++;xp+=25;}
+    if(l.tahajjud){tah++;xp+=XP_TAH;}
   });
   var p=dk(Date.now()),streak=0;
   var off=dayCount(key(p.y,p.m,p.d))===5?0:-1;
@@ -364,41 +435,45 @@ function stats(){
     if(dayCount(key(a[0],a[1],a[2]))===5)streak++;else break;
     if(streak>3650)break;
   }
-  var pr=runs(keys,function(k){return dayCount(k)===5;});
+  var pr=runs(keys,function(k){return dayCount(k)===5;},DAY);
   var best=Math.max(maxOf(pr),streak);
   var comeback=pr.some(function(r,i){return i>0&&r>=3&&maxOf(pr.slice(0,i))>=3;});
-  var fajrBest=maxOf(runs(keys,function(k){var f=S.log[k].fajr;return !!(f&&f.ok);}));
-  var tahBest=maxOf(runs(keys,function(k){return !!S.log[k].tahajjud;}));
-  return {xp:xp,prayers:prayers,onTime:onTime,fajrOn:fajrOn,perfect:perfect,tah:tah,tahBest:tahBest,fajrBest:fajrBest,comeback:comeback,streak:streak,best:best,level:Math.floor(xp/100)+1};
+  var fajrBest=maxOf(runs(keys,function(k){var f=S.log[k].fajr;return !!(f&&f.ok);},DAY));
+  var tahBest=maxOf(runs(keys,function(k){return !!S.log[k].tahajjud;},DAY));
+  var friBest=maxOf(runs(keys,function(k){var r=S.log[k].dhuhr;return !!(r&&r.j&&r.ok);},7*DAY));
+  return {xp:xp,prayers:prayers,onTime:onTime,fajrOn:fajrOn,perfect:perfect,tah:tah,tahBest:tahBest,fajrBest:fajrBest,friBest:friBest,comeback:comeback,streak:streak,best:best,level:Math.floor(xp/100)+1};
 }
 var BADGES=[
-  {id:"first",em:"🌱",name:"First step",test:function(s){return s.prayers>=1;}},
-  {id:"perfect",em:"⭐",name:"Perfect day",test:function(s){return s.perfect>=1;}},
-  {id:"s3",em:"🔥",name:"3-day streak",test:function(s){return s.best>=3;}},
-  {id:"s7",em:"🏅",name:"7-day streak",test:function(s){return s.best>=7;}},
-  {id:"s14",em:"🚀",name:"14-day streak",test:function(s){return s.best>=14;}},
-  {id:"s30",em:"👑",name:"30-day streak",test:function(s){return s.best>=30;}},
-  {id:"fajr10",em:"🌄",name:"Fajr fighter ×10",test:function(s){return s.fajrOn>=10;}},
-  {id:"early",em:"🐦",name:"Early bird (7 Fajr in a row)",test:function(s){return s.fajrBest>=7;}},
-  {id:"ot50",em:"⏱️",name:"50 on time",test:function(s){return s.onTime>=50;}},
-  {id:"p100",em:"💎",name:"100 prayers",test:function(s){return s.prayers>=100;}},
-  {id:"p500",em:"🏆",name:"500 prayers",test:function(s){return s.prayers>=500;}},
-  {id:"pf10",em:"🌟",name:"10 perfect days",test:function(s){return s.perfect>=10;}},
-  {id:"comeback",em:"💪",name:"Comeback",test:function(s){return s.comeback;}},
-  {id:"owl",em:"🦉",name:"Night owl (first Tahajjud)",test:function(s){return s.tah>=1;}},
-  {id:"tah7",em:"🌌",name:"7 Tahajjud nights in a row",test:function(s){return s.tahBest>=7;}},
-  {id:"tah10",em:"🌠",name:"Tahajjud ×10",test:function(s){return s.tah>=10;}},
-  {id:"tah30",em:"✨",name:"Tahajjud ×30",test:function(s){return s.tah>=30;}}
+  {id:"first",em:"🌱",k:"b_first",n:0,test:function(s){return s.prayers>=1;}},
+  {id:"perfect",em:"⭐",k:"b_perfect",n:0,test:function(s){return s.perfect>=1;}},
+  {id:"s3",em:"🔥",k:"b_streak",n:3,test:function(s){return s.best>=3;}},
+  {id:"s7",em:"🏅",k:"b_streak",n:7,test:function(s){return s.best>=7;}},
+  {id:"s14",em:"🚀",k:"b_streak",n:14,test:function(s){return s.best>=14;}},
+  {id:"s30",em:"👑",k:"b_streak",n:30,test:function(s){return s.best>=30;}},
+  {id:"fajr10",em:"🌄",k:"b_fajr",n:10,test:function(s){return s.fajrOn>=10;}},
+  {id:"early",em:"🐦",k:"b_early",n:7,test:function(s){return s.fajrBest>=7;}},
+  {id:"ot50",em:"⏱️",k:"b_ontime",n:50,test:function(s){return s.onTime>=50;}},
+  {id:"p100",em:"💎",k:"b_prayers",n:100,test:function(s){return s.prayers>=100;}},
+  {id:"p500",em:"🏆",k:"b_prayers",n:500,test:function(s){return s.prayers>=500;}},
+  {id:"pf10",em:"🌟",k:"b_pf",n:10,test:function(s){return s.perfect>=10;}},
+  {id:"comeback",em:"💪",k:"b_comeback",n:0,test:function(s){return s.comeback;}},
+  {id:"fri4",em:"🕌",k:"b_fri",n:4,test:function(s){return s.friBest>=4;}},
+  {id:"fri12",em:"🕋",k:"b_fri",n:12,test:function(s){return s.friBest>=12;}},
+  {id:"owl",em:"🦉",k:"b_owl",n:0,test:function(s){return s.tah>=1;}},
+  {id:"tah7",em:"🌌",k:"b_tahrow",n:7,test:function(s){return s.tahBest>=7;}},
+  {id:"tah10",em:"🌠",k:"b_tah",n:10,test:function(s){return s.tah>=10;}},
+  {id:"tah30",em:"✨",k:"b_tah",n:30,test:function(s){return s.tah>=30;}}
 ];
+function badgeName(b){return t(b.k,{n:N(b.n)});}
 function earned(s){return BADGES.filter(function(b){return b.test(s);}).map(function(b){return b.id;});}
 
 /* ---------- feedback: toast, confetti, sound ---------- */
 function toast(msg,cls){
   var box=document.getElementById("toasts");
-  var t=document.createElement("div");
-  t.className="toast "+(cls||"");t.textContent=msg;
-  box.appendChild(t);
-  setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},4200);
+  var el=document.createElement("div");
+  el.className="toast "+(cls||"");el.textContent=msg;
+  box.appendChild(el);
+  setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el);},4200);
 }
 function confetti(){
   try{if(window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches)return;}catch(e){}
@@ -444,27 +519,12 @@ function refreshNative(cb){
     return window.SalahNative.exactAllowed();
   }).then(function(x){nexact=x;if(cb)cb();}).catch(function(){if(cb)cb();});
 }
-// Reminder wording: it gets firmer as the end of the prayer gets closer.
-var PH={
-  early:[
-    ["⏳ {p} is running out","{m} min left for {p} (ends {t}). Pray now and keep your streak 🔥"],
-    ["⏳ {p} ending soon","Salah time is slipping away, {m} min left. Do it now before it ends!"],
-    ["🕌 Don't miss {p}","Only {m} minutes remain. Take a moment for {p} before it ends."]
-  ],
-  mid:[
-    ["⚠️ {p} almost over","Salah time is almost over! Do it now before it ends. {m} min left."],
-    ["⚠️ Only {m} min for {p}","Put everything down and pray {p} now. Your streak depends on it 🔥"],
-    ["⚠️ {p} time is closing","{m} minutes left. Make wudu and pray now!"]
-  ],
-  late:[
-    ["🚨 Last chance for {p}!","Only {m} min left! Salah time is almost over, pray right now!"],
-    ["🚨 {p} ends in {m} min","This is your final reminder. Pray now before the time ends!"],
-    ["🚨 Hurry, {p} is ending","{m} minutes. Don't let it pass. Pray now!"]
-  ]
-};
-function phrase(p,m,t,seed){
-  var tier=m>=20?"early":(m>=10?"mid":"late"), a=PH[tier], v=a[Math.abs(seed)%a.length];
-  function f(s){return s.replace(/\{p\}/g,p).replace(/\{m\}/g,m).replace(/\{t\}/g,t);}
+// Reminder wording gets firmer as the end of the prayer gets closer.
+function phrase(p,m,tstr,seed){
+  var tier=m>=20?"ph_early":(m>=10?"ph_mid":"ph_late");
+  var a=t(tier); if(!Array.isArray(a))a=TR.en[tier];
+  var v=a[Math.abs(seed)%a.length];
+  function f(s){return s.replace(/\{p\}/g,p).replace(/\{m\}/g,N(m)).replace(/\{t\}/g,tstr);}
   return {title:f(v[0]),body:f(v[1])};
 }
 function buildSchedule(now){
@@ -473,8 +533,8 @@ function buildSchedule(now){
     var a=shift(p.y,p.m,p.d,n), k=key(a[0],a[1],a[2]);
     var dn=Math.floor(Date.UTC(a[0],a[1]-1,a[2])/86400000);
     dayWindows(a[0],a[1],a[2]).forEach(function(w,i){
-      var nm=pinfo(w.id).name, done=!!(S.log[k]&&S.log[k][w.id]);
-      items.push({id:dn*100+i*10,at:w.s,urgent:false,title:nm+" time 🕌",body:"The "+nm+" window just opened ("+fmtT(w.s)+"). Pray on time to keep your streak 🔥"});
+      var nm=pinfo(w.id,w.jum).name, done=!!(S.log[k]&&S.log[k][w.id]);
+      items.push({id:dn*100+i*10,at:w.s,urgent:false,title:t("n_start_title",{p:nm}),body:t("n_start_body",{p:nm,t:fmtT(w.s)})});
       if(done)return;
       warns.forEach(function(m){
         var at=w.e-m*60000, ph=phrase(nm,m,fmtT(w.e),dn+i+m);
@@ -484,8 +544,12 @@ function buildSchedule(now){
     if(S.settings.tahNotif){
       var tw=tahWindow(a[0],a[1],a[2]);
       if(!(S.log[k]&&S.log[k].tahajjud)){
-        items.push({id:dn*100+9,at:tw.s,urgent:false,title:"🌌 Last third of the night",body:"Tahajjud time has begun (until "+fmtT(tw.e)+"). It's worth +25 XP."});
+        items.push({id:dn*100+9,at:tw.s,urgent:false,title:t("n_tah_title"),body:t("n_tah_body",{t:fmtT(tw.e),xp:N(XP_TAH)})});
       }
+    }
+    if(S.friday==="jumuah"&&S.mosque&&isFri(a[0],a[1],a[2])){
+      var hm=S.mosque.split(":"), hh=+hm[0], mm=+hm[1];
+      items.push({id:dn*100+8,at:localMs(a[0],a[1],a[2],hh,mm)-30*60000,urgent:false,title:t("n_mosque_title"),body:t("n_mosque_body",{t:fmtHM(hh,mm)})});
     }
   }
   return items.filter(function(i){return i.at>now+2000;}).sort(function(x,y){return x.at-y.at;}).slice(0,400);
@@ -521,37 +585,6 @@ function checkUpdate(force){
     }).catch(function(){});
 }
 
-/* ---------- in-page reminders (browser only; the Android app uses real notifications) ---------- */
-function notify(title,body){
-  toast(title+" · "+body,"gold");
-  chime(false);
-  try{
-    if(S.settings.notif&&"Notification" in window&&Notification.permission==="granted"){
-      new Notification(title,{body:body,tag:title});
-    }
-  }catch(e){}
-}
-function checkReminders(now,ws){
-  if(NAT)return;
-  var changed=false;
-  ws.forEach(function(w){
-    var nm=pinfo(w.id).name, k1=w.day+w.id+"s";
-    if(now>=w.s&&now<w.s+5*60000&&!S.notified[k1]){
-      S.notified[k1]=1;changed=true;
-      notify(nm+" time 🕌","The "+nm+" window just opened ("+fmtT(w.s)+").");
-    }
-    S.settings.warns.forEach(function(m){
-      var wt=w.e-m*60000, k2=w.day+w.id+"w"+m;
-      if(!isDone(w)&&now>=wt&&now<wt+5*60000&&now<w.e&&!S.notified[k2]){
-        S.notified[k2]=1;changed=true;
-        var ph=phrase(nm,m,fmtT(w.e),m);
-        notify(ph.title,ph.body);
-      }
-    });
-  });
-  if(changed)save();
-}
-
 /* ---------- logging a prayer ---------- */
 function logPrayer(day,id){
   var now=Date.now(), w;
@@ -565,24 +598,26 @@ function logPrayer(day,id){
   var before=stats(), bBefore=earned(before);
   var ok=id==="tahajjud"?true:now<w.e;
   S.log[day]=S.log[day]||{};
-  S.log[day][id]={t:now,ok:ok};
+  var rec={t:now,ok:ok};
+  if(w.jum)rec.j=true;
+  S.log[day][id]=rec;
   var after=stats(), bAfter=earned(after);
   S.badges=bAfter;
   save();
   scheduleNative();
-  var nm=pinfo(id).name;
-  if(id==="tahajjud"){toast("+25 XP · Tahajjud logged 🌌","green");chime(true);confetti();}
+  var nm=pinfo(id,w.jum).name;
+  if(id==="tahajjud"){toast(t("t_tah",{xp:N(XP_TAH)}),"green");chime(true);confetti();}
   else{
-    toast((ok?"+10 XP · ":"+3 XP · ")+nm+(ok?" done on time! 🎉":" (qada) logged"),ok?"green":"");
+    toast(ok?t("t_xp_on",{xp:N(winXp(w)),p:nm}):t("t_xp_late",{xp:N(XP_LATE),p:nm}),ok?"green":"");
     chime(ok);
     if(ok||dayCount(day)===5)confetti();
-    if(dayCount(day)===5){setTimeout(function(){toast("⭐ Perfect day! +20 bonus XP","gold");},700);}
+    if(dayCount(day)===5){setTimeout(function(){toast(t("t_perfect",{xp:N(20)}),"gold");},700);}
   }
-  if(after.level>before.level){setTimeout(function(){toast("🎊 Level up! You're now level "+after.level,"gold");confetti();},1300);}
+  if(after.level>before.level){setTimeout(function(){toast(t("t_level",{n:N(after.level)}),"gold");confetti();},1300);}
   bAfter.forEach(function(b){
     if(bBefore.indexOf(b)<0){
       var bd=BADGES.filter(function(x){return x.id===b;})[0];
-      setTimeout(function(){toast(bd.em+" New badge: "+bd.name,"gold");},1900);
+      setTimeout(function(){toast(t("t_badge",{e:bd.em,name:badgeName(bd)}),"gold");},1900);
     }
   });
   render();
@@ -598,38 +633,38 @@ function getPos(){
   });
 }
 function setLocation(loc){
-  S.loc={name:loc.name,lat:loc.lat,lng:loc.lng,tz:loc.tz};
+  S.loc={name:loc.name,lat:loc.lat,lng:loc.lng,tz:loc.tz,cc:loc.cc||""};
   S.locSet=true;
-  if(!S.manual){var sm=suggestMethod(loc.lat,loc.lng);S.method=sm.m;S.asr=sm.asr;}
+  applyAuto();
   locResults=[];locQuery="";locMsg="";
   save();curKey="";
   render();scheduleNative();
-  toast("📍 Location set: "+loc.name,"green");
+  toast(t("loc_set",{name:loc.name}),"green");
 }
 function useGps(){
-  locMsg="Finding your location…";render();
+  locMsg=t("loc_finding");render();
   getPos().then(function(pos){
     var tz="UTC";
     try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC";}catch(e){}
-    setLocation({name:"My location ("+pos.lat.toFixed(2)+"°, "+pos.lng.toFixed(2)+"°)",lat:pos.lat,lng:pos.lng,tz:tz});
+    setLocation({name:t("my_loc",{lat:N(pos.lat.toFixed(2)),lng:N(pos.lng.toFixed(2))}),lat:pos.lat,lng:pos.lng,tz:tz,cc:""});
   }).catch(function(){
-    locMsg="Couldn't get your location. Allow location permission, or search for your city below.";
+    locMsg=t("loc_gps_fail");
     render();
   });
 }
 function doSearch(){
   var q=locQuery.trim();
-  if(q.length<2){locMsg="Type at least 2 letters.";render();return;}
-  locMsg="Searching…";locResults=[];render();
-  fetch("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(q)+"&count=8&language=en&format=json")
+  if(q.length<2){locMsg=t("loc_min");render();return;}
+  locMsg=t("loc_searching");locResults=[];render();
+  fetch("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(q)+"&count=8&language="+curLang()+"&format=json")
     .then(function(r){if(!r.ok)throw new Error("http");return r.json();})
     .then(function(j){
       locResults=(j.results||[]).filter(function(r){return r.timezone&&typeof r.latitude==="number";}).map(function(r){
-        return {name:[r.name,r.admin1,r.country].filter(function(x,i,a){return x&&a.indexOf(x)===i;}).join(", "),lat:r.latitude,lng:r.longitude,tz:r.timezone};
+        return {name:[r.name,r.admin1,r.country].filter(function(x,i,a){return x&&a.indexOf(x)===i;}).join(", "),lat:r.latitude,lng:r.longitude,tz:r.timezone,cc:r.country_code||""};
       });
-      locMsg=locResults.length?"":"No city found. Try another spelling.";
+      locMsg=locResults.length?"":t("loc_none");
     })
-    .catch(function(){locResults=[];locMsg="Couldn't search. Check your internet connection.";})
+    .catch(function(){locResults=[];locMsg=t("loc_fail");})
     .then(function(){render();});
 }
 
@@ -647,142 +682,161 @@ function stateKey(now){
 }
 function urgentMs(){return (S.settings.warns.length?S.settings.warns[0]:0)*60000;}
 function btn(act,label,cls,attrs){return '<button class="btn '+(cls||"")+'" data-act="'+act+'"'+(attrs||"")+'>'+label+'</button>';}
+function secName(pi){return pi.sec?'<small>'+pi.sec+'</small>':'';}
+function onOff(v){return esc(t(v?"on":"off"));}
+
+function renderPicker(){
+  var guess=guessLang(), list=LANGS.slice().sort(function(a,b){return (a.code===guess?-1:0)-(b.code===guess?-1:0);});
+  var h='<div class="card pick" style="margin-top:24px"><h2 style="text-align:center;font-size:17px">🌐 Language · ভাষা · زبان · اللغة</h2>';
+  h+='<div class="note" style="text-align:center;margin:0 0 10px">Choose your language<br>আপনার ভাষা বেছে নিন<br>اپنی زبان منتخب کریں<br>اختر لغتك</div>';
+  list.forEach(function(l){
+    h+='<button class="res" data-act="lang" data-l="'+l.code+'" dir="'+l.dir+'">'+(l.code===guess?"✓ ":"")+esc(l.name)+'</button>';
+  });
+  h+='</div>';
+  document.getElementById("app").innerHTML=h;
+}
 
 function render(){
+  applyLang();
+  if(!S.lang){renderPicker();return;}
   var now=Date.now(), ws=windowsFor(now), c=current(now,ws), cw=c.cw, nw=c.nw;
   var st=stats(), p=dk(now), todayKey=key(p.y,p.m,p.d);
   curKey=stateKey(now);
   var h="";
 
-  h+='<header><div class="brand">🕌 Salah Streak<small>'+esc(S.loc.name)+' · '+p.d+'/'+p.m+'/'+p.y+'</small></div>'+
-     '<div class="chips"><span class="chip flame">🔥 '+st.streak+'</span><span class="chip xp">⚡ '+st.xp+'</span></div></header>';
+  h+='<header><div class="brand">🕌 Salah Streak<small>'+esc(S.loc.name)+' · '+D(p.d+'/'+p.m+'/'+p.y)+'</small></div>'+
+     '<div class="chips"><span class="chip flame">🔥 '+N(st.streak)+'</span><span class="chip xp">⚡ '+N(st.xp)+'</span></div></header>';
 
   var up=updateInfo();
   if(up){
-    h+='<section class="card upd"><h2>🎁 Update available · v'+up.n+'</h2><div class="note" style="margin:0 0 4px;white-space:pre-wrap">'+esc(up.notes||"A new version is ready.")+'</div>'+
-       btn("upd-get","Download update")+btn("upd-later","Later","ghost")+'</section>';
+    h+='<section class="card upd"><h2>'+esc(t("upd_title",{n:N(up.n)}))+'</h2><div class="note" style="margin:0 0 4px;white-space:pre-wrap">'+esc(up.notes||t("upd_default"))+'</div>'+
+       btn("upd-get",esc(t("upd_get")))+btn("upd-later",esc(t("upd_later")),"ghost")+'</section>';
   }
   if(!S.locSet){
-    h+='<section class="card upd"><h2>📍 Where are you?</h2><div class="note" style="margin:0 0 4px">Prayer times depend on your location. Showing '+esc(S.loc.name)+' for now.</div>'+
-       btn("gps","Use my location")+btn("gotoloc","Search for a city","ghost")+btn("keeploc","Keep "+esc(S.loc.name),"ghost")+'</section>';
+    h+='<section class="card upd"><h2>'+esc(t("setup_title"))+'</h2><div class="note" style="margin:0 0 4px">'+esc(t("setup_note",{name:S.loc.name}))+'</div>'+
+       btn("gps",esc(t("use_my_loc")))+btn("gotoloc",esc(t("search_city")),"ghost")+btn("keeploc",esc(t("keep_loc",{name:S.loc.name})),"ghost")+'</section>';
   }
 
-  h+='<div class="lvl"><b>Level '+st.level+'</b><div class="bar gold"><i style="width:'+(st.xp%100)+'%"></i></div><span style="font-size:12px;color:var(--muted)">'+(st.xp%100)+'/100</span></div>';
+  h+='<div class="lvl"><b>'+esc(t("lvl",{n:N(st.level)}))+'</b><div class="bar gold"><i style="width:'+(st.xp%100)+'%"></i></div><span style="font-size:12px;color:var(--muted)">'+N(st.xp%100)+'/'+N(100)+'</span></div>';
 
   // hero
-  var msg,done=cw&&isDone(cw);
-  if(!cw){msg="Quiet time before the next prayer. Get your wudu ready! 💧";}
-  else if(done){msg="MashaAllah! "+pinfo(cw.id).name+" is done. "+(dayCount(todayKey)<5?"Keep going, finish all 5 today!":"All 5 done today! ⭐");}
-  else{msg=pinfo(cw.id).name+" is open. Pray on time to earn +10 XP! "+(st.streak>0?"Your "+st.streak+"-day streak is counting on you 🔥":"");}
+  var msg,done=cw&&isDone(cw), cwName=cw?pinfo(cw.id,cw.jum).name:"";
+  if(!cw){msg=t("m_quiet");}
+  else if(done){msg=t(dayCount(todayKey)<5?"m_done":"m_all",{p:cwName});}
+  else{msg=t("m_open",{p:cwName,xp:N(winXp(cw))})+(st.streak>0?t("m_streak",{n:N(st.streak)}):"");}
   h+='<section class="card hero" id="hero">';
-  h+='<div class="mascot"><div class="moon">🌙</div><div class="bubble" id="bubble">'+msg+'</div></div>';
+  h+='<div class="mascot"><div class="moon">🌙</div><div class="bubble" id="bubble">'+esc(msg)+'</div></div>';
   if(cw){
-    var pi=pinfo(cw.id);
-    h+='<div class="label">Current prayer</div><div class="pname">'+pi.icon+' '+pi.name+'<small>'+pi.bn+'</small></div>';
+    var pi=pinfo(cw.id,cw.jum);
+    h+='<div class="label">'+esc(t("cur_prayer"))+'</div><div class="pname">'+pi.icon+' '+esc(pi.name)+secName(pi)+'</div>';
     h+='<div class="cd" id="cd">--:--:--</div>';
     h+='<div class="bar"><i id="bar" style="width:0%"></i></div>';
-    h+='<div class="meta"><span>Started '+fmtT(cw.s)+'</span><span>Ends '+fmtT(cw.e)+'</span></div>';
+    h+='<div class="meta"><span>'+esc(t("started",{t:fmtT(cw.s)}))+'</span><span>'+esc(t("ends",{t:fmtT(cw.e)}))+'</span></div>';
     if(done){
       var r=S.log[cw.day][cw.id];
-      h+='<div class="done-pill">✅ Done '+(r.ok?"on time · +10 XP":"· +3 XP")+'</div>';
+      h+='<div class="done-pill">'+esc(r.ok?t("done_on",{xp:N(r.j?XP_JUM:XP_ON)}):t("done_late",{xp:N(XP_LATE)}))+'</div>';
     }else{
-      h+=btn("pray","I prayed ✓","",' data-day="'+cw.day+'" data-id="'+cw.id+'"');
+      h+=btn("pray",esc(t("i_prayed")),"",' data-day="'+cw.day+'" data-id="'+cw.id+'"');
     }
     if(nw){
-      var ni=pinfo(nw.id);
-      h+='<div class="next">Next: <b>'+ni.icon+' '+ni.name+'</b> at <b>'+fmtT(nw.s)+'</b> · in <span id="nx">--:--:--</span></div>';
+      var ni=pinfo(nw.id,nw.jum);
+      h+='<div class="next">'+esc(t("next_line",{p:ni.icon+" "+ni.name,t:fmtT(nw.s),cd:"\u0001"})).replace("\u0001",'<span id="nx" dir="ltr">--:--:--</span>')+'</div>';
     }
   }else if(nw){
-    var ni2=pinfo(nw.id);
-    h+='<div class="label">Next prayer</div><div class="pname">'+ni2.icon+' '+ni2.name+'<small>'+ni2.bn+'</small></div>';
+    var ni2=pinfo(nw.id,nw.jum);
+    h+='<div class="label">'+esc(t("next_prayer"))+'</div><div class="pname">'+ni2.icon+' '+esc(ni2.name)+secName(ni2)+'</div>';
     h+='<div class="cd" id="cd">--:--:--</div>';
-    h+='<div class="meta"><span>Starts at '+fmtT(nw.s)+'</span><span>No fard prayer right now</span></div>';
+    h+='<div class="meta"><span>'+esc(t("starts_at",{t:fmtT(nw.s)}))+'</span><span>'+esc(t("no_fard"))+'</span></div>';
   }
   h+='</section>';
 
   // today list
-  h+='<section class="card"><h2>Today</h2><ul>';
+  h+='<section class="card"><h2>'+esc(t("today"))+'</h2><ul>';
   ws.filter(function(w){return w.day===todayKey;}).forEach(function(w){
-    var pi=pinfo(w.id), r=S.log[w.day]&&S.log[w.day][w.id];
+    var pi=pinfo(w.id,w.jum), r=S.log[w.day]&&S.log[w.day][w.id];
     var isCur=cw&&cw.day===w.day&&cw.id===w.id;
     var act;
-    if(r){act=r.ok?'<span class="tag ok">✅ +10</span>':'<span class="tag late">✔ late +3</span>';}
-    else if(isCur){act=btn("pray","Pray ✓","sm",' data-day="'+w.day+'" data-id="'+w.id+'"');}
-    else if(now>=w.e){act=btn("pray","Qada","sm gold",' data-day="'+w.day+'" data-id="'+w.id+'"');}
+    if(r){act=r.ok?'<span class="tag ok">'+esc(t("ok_tag",{xp:N(r.j?XP_JUM:XP_ON)}))+'</span>':'<span class="tag late">'+esc(t("late_tag",{xp:N(XP_LATE)}))+'</span>';}
+    else if(isCur){act=btn("pray",esc(t("pray")),"sm",' data-day="'+w.day+'" data-id="'+w.id+'"');}
+    else if(now>=w.e){act=btn("pray",esc(t("qada")),"sm gold",' data-day="'+w.day+'" data-id="'+w.id+'"');}
     else{act='<span class="tag lock">🔒</span>';}
-    h+='<li class="row'+(isCur?" cur":"")+'"><span class="ic">'+pi.icon+'</span><div class="nm"><b>'+pi.name+'</b><small>'+pi.bn+'</small><div class="tm">'+fmtT(w.s)+' – '+fmtT(w.e)+'</div></div>'+act+'</li>';
+    h+='<li class="row'+(isCur?" cur":"")+'"><span class="ic">'+pi.icon+'</span><div class="nm"><b>'+esc(pi.name)+'</b>'+secName(pi)+'<div class="tm">'+fmtT(w.s)+' – '+fmtT(w.e)+'</div></div>'+act+'</li>';
   });
-  // Tahajjud (optional, outside the 5 daily prayers)
   var tws=tahWindows(now);
   var tw=tws.filter(function(x){return now>=x.s&&now<x.e;})[0]||tws.filter(function(x){return x.s>now;})[0];
   if(tw){
-    var tr=S.log[tw.day]&&S.log[tw.day].tahajjud, tcur=now>=tw.s&&now<tw.e, tact;
-    if(tr){tact='<span class="tag ok">✅ +25</span>';}
-    else if(tcur){tact=btn("pray","Pray ✓","sm",' data-day="'+tw.day+'" data-id="tahajjud"');}
+    var tpi=pinfo("tahajjud"), tr=S.log[tw.day]&&S.log[tw.day].tahajjud, tcur=now>=tw.s&&now<tw.e, tact;
+    if(tr){tact='<span class="tag ok">'+esc(t("ok_tag",{xp:N(XP_TAH)}))+'</span>';}
+    else if(tcur){tact=btn("pray",esc(t("pray")),"sm",' data-day="'+tw.day+'" data-id="tahajjud"');}
     else{tact='<span class="tag lock">🔒</span>';}
-    h+='<li class="row opt'+(tcur&&!tr?" cur":"")+'"><span class="ic">'+TAH.icon+'</span><div class="nm"><b>Tahajjud</b><small>'+TAH.bn+' · optional · +25 XP</small><div class="tm">Last third of the night · '+fmtT(tw.s)+' – '+fmtT(tw.e)+'</div></div>'+tact+'</li>';
+    h+='<li class="row opt'+(tcur&&!tr?" cur":"")+'"><span class="ic">'+tpi.icon+'</span><div class="nm"><b>'+esc(tpi.name)+'</b><small>'+esc(t("optional"))+' · +'+N(XP_TAH)+' XP</small><div class="tm">'+esc(t("tah_sub"))+' · '+fmtT(tw.s)+' – '+fmtT(tw.e)+'</div></div>'+tact+'</li>';
   }
   h+='</ul></section>';
 
   // week
-  h+='<section class="card"><h2>This week</h2><div class="week">';
-  var names=["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+  h+='<section class="card"><h2>'+esc(t("week"))+'</h2><div class="week">';
+  var names=t("days").split(",");
   for(var i=6;i>=0;i--){
     var a=shift(p.y,p.m,p.d,-i), k=key(a[0],a[1],a[2]), l=S.log[k]||{};
     var wd=new Date(Date.UTC(a[0],a[1]-1,a[2])).getUTCDay();
-    h+='<div class="day'+(i===0?" today":"")+'"><b>'+names[wd]+'</b><div class="dots'+(dayCount(k)===5?" perfect":"")+'">';
-    PR.forEach(function(x){var r=l[x.id];h+='<i class="'+(r?(r.ok?"ok":"late"):"")+'"></i>';});
+    h+='<div class="day'+(i===0?" today":"")+'"><b>'+esc(names[wd])+'</b><div class="dots'+(dayCount(k)===5?" perfect":"")+'">';
+    PR.forEach(function(x){var rr=l[x.id];h+='<i class="'+(rr?(rr.ok?"ok":"late"):"")+'"></i>';});
     h+='<i class="'+(l.tahajjud?"tah":"tahoff")+'"></i></div></div>';
   }
-  h+='</div><div class="note">Top to bottom: Fajr, Dhuhr, Asr, Maghrib, Isha, then the small dot for Tahajjud. Green = on time, gold = qada. Best streak: '+st.best+' days.</div></section>';
+  h+='</div><div class="note">'+esc(t("week_note",{n:N(st.best)}))+'</div></section>';
 
   // badges
   var got=earned(st);
-  h+='<section class="card"><h2>Badges · '+got.length+'/'+BADGES.length+'</h2><div class="badges">';
+  h+='<section class="card"><h2>'+esc(t("badges",{a:N(got.length),b:N(BADGES.length)}))+'</h2><div class="badges">';
   BADGES.forEach(function(b){
     var on=got.indexOf(b.id)>=0;
-    h+='<div class="badge '+(on?"got":"locked")+'"><span class="em">'+b.em+'</span>'+b.name+'</div>';
+    h+='<div class="badge '+(on?"got":"locked")+'"><span class="em">'+b.em+'</span>'+esc(badgeName(b))+'</div>';
   });
   h+='</div></section>';
 
-  // location and calculation
-  h+='<section class="card" id="loccard"><h2>Location &amp; times</h2>';
-  h+='<div class="set"><span>📍 '+esc(S.loc.name)+'</span>'+btn("gps","Use GPS","sm")+'</div>';
-  h+='<div class="locrow"><input id="locq" class="locin" type="text" placeholder="Search a city, e.g. London" value="'+esc(locQuery)+'" autocomplete="off">'+btn("locsearch","Search","sm")+'</div>';
+  // location
+  h+='<section class="card" id="loccard"><h2>'+esc(t("loc_title"))+'</h2>';
+  h+='<div class="set"><span>📍 '+esc(S.loc.name)+'</span>'+btn("gps",esc(t("use_gps")),"sm")+'</div>';
+  h+='<div class="locrow"><input id="locq" class="locin" type="text" placeholder="'+esc(t("search_ph"))+'" value="'+esc(locQuery)+'" autocomplete="off">'+btn("locsearch",esc(t("search")),"sm")+'</div>';
   if(locMsg)h+='<div class="note">'+esc(locMsg)+'</div>';
   locResults.forEach(function(r,i){h+='<button class="res" data-act="locpick" data-i="'+i+'">'+esc(r.name)+'</button>';});
-  h+='<div class="set"><span>Method</span><select data-act="method">';
-  Object.keys(METHODS).forEach(function(k){h+='<option value="'+k+'"'+(S.method===k?" selected":"")+'>'+esc(METHODS[k].name)+'</option>';});
+  h+='<div class="note">'+esc(t("loc_note"))+'</div></section>';
+
+  // settings
+  h+='<section class="card"><h2>'+esc(t("set_title"))+'</h2>';
+  h+='<div class="set"><span>'+esc(t("language"))+'</span><select data-act="langsel">';
+  LANGS.forEach(function(l){h+='<option value="'+l.code+'"'+(S.lang===l.code?" selected":"")+'>'+esc(l.name)+'</option>';});
   h+='</select></div>';
-  h+='<div class="set"><span>Asr</span><select data-act="asr"><option value="standard"'+(S.asr==="standard"?" selected":"")+'>Standard (Shafi, Maliki, Hanbali)</option><option value="hanafi"'+(S.asr==="hanafi"?" selected":"")+'>Hanafi</option></select></div>';
-  h+='<div class="note">City search sends the name you type to the free Open-Meteo service. Your GPS position stays on your phone and only approximate location is used. Method and Asr are chosen for your region; change them to match your local mosque. Very far north or south, some times are estimates.</div></section>';
+  h+='<div class="set"><span>'+esc(t("h24"))+'</span>'+btn("h24",onOff(S.h24),S.h24?"sm":"sm ghost")+'</div>';
+  if(DIG[curLang()])h+='<div class="set"><span>'+esc(t("digits"))+'</span>'+btn("digits",onOff(S.digits==="local"),S.digits==="local"?"sm":"sm ghost")+'</div>';
+  h+='<div class="set"><span>'+esc(t("fri_pray"))+'</span><select data-act="friday"><option value="jumuah"'+(S.friday==="jumuah"?" selected":"")+'>'+esc(t("fri_opt_j"))+'</option><option value="dhuhr"'+(S.friday==="dhuhr"?" selected":"")+'>'+esc(t("fri_opt_d"))+'</option></select></div>';
+  if(S.friday==="jumuah"){
+    h+='<div class="set"><span>'+esc(t("mosque"))+'</span></div>';
+    h+='<div class="locrow"><input id="mosque" class="locin" type="time" value="'+esc(S.mosque)+'" dir="ltr">'+(S.mosque?btn("mosclear",esc(t("mosque_clear")),"sm ghost"):"")+'</div>';
+    h+='<div class="note" style="margin-top:0">'+esc(t("mosque_hint"))+'</div>';
+  }
+  h+='<div class="note">'+esc(t("fri_note",{xp:N(XP_JUM)}))+'</div></section>';
 
   // reminders
   var chips='';
-  WARN_OPTS.forEach(function(m){chips+='<button class="chipb'+(S.settings.warns.indexOf(m)>=0?" on":"")+'" data-act="warnchip" data-v="'+m+'">'+m+' min</button>';});
+  WARN_OPTS.forEach(function(m){chips+='<button class="chipb'+(S.settings.warns.indexOf(m)>=0?" on":"")+'" data-act="warnchip" data-v="'+m+'">'+esc(t("min",{m:N(m)}))+'</button>';});
+  h+='<section class="card"><h2>'+esc(t("rem_title"))+'</h2>';
   if(NAT){
     var on=nperm==="granted";
-    h+='<section class="card"><h2>Reminders</h2>';
-    h+='<div class="set"><span>Background reminders</span>'+btn("notif",on?"On":"Turn on",on?"sm":"sm ghost")+'</div>';
-    h+='<div class="set"><span>Exact timing</span>'+btn("exact",nexact?"On":"Allow",nexact?"sm":"sm ghost")+'</div>';
-    h+='<div class="set"><span>Sound effects in the app</span>'+btn("sound",S.settings.sound?"On":"Off",S.settings.sound?"sm":"sm ghost")+'</div>';
-    h+='<div class="set" style="display:block"><span>"Almost over" alerts: how long before a prayer ends</span><div class="chipsrow">'+chips+'</div></div>';
-    h+='<div class="set"><span>Tahajjud reminder (last third of the night)</span>'+btn("tahnotif",S.settings.tahNotif?"On":"Off",S.settings.tahNotif?"sm":"sm ghost")+'</div>';
-    h+='<div class="set"><span>Try a normal reminder</span>'+btn("test","Test","sm ghost")+'</div>';
-    h+='<div class="set"><span>Try an "almost over" alert</span>'+btn("testu","Test","sm ghost")+'</div>';
-    h+='<div class="note">Reminders are scheduled on your phone for the next few weeks and arrive even when the app is closed. Open the app now and then so it can schedule more. Silent or Do Not Disturb mode can still mute them. If reminders go missing, set this app\'s battery usage to <b>Unrestricted</b> / allow auto-start in your phone settings (needed on Xiaomi, Oppo, Vivo, Realme and some Samsung phones).</div></section>';
+    h+='<div class="set"><span>'+esc(t("bg_rem"))+'</span>'+btn("notif",esc(on?t("on"):t("turn_on")),on?"sm":"sm ghost")+'</div>';
+    h+='<div class="set"><span>'+esc(t("exact"))+'</span>'+btn("exact",esc(nexact?t("on"):t("allow")),nexact?"sm":"sm ghost")+'</div>';
+    h+='<div class="set"><span>'+esc(t("sound_fx"))+'</span>'+btn("sound",onOff(S.settings.sound),S.settings.sound?"sm":"sm ghost")+'</div>';
+    h+='<div class="set" style="display:block"><span>'+esc(t("warn_title"))+'</span><div class="chipsrow">'+chips+'</div></div>';
+    h+='<div class="set"><span>'+esc(t("tah_rem"))+'</span>'+btn("tahnotif",onOff(S.settings.tahNotif),S.settings.tahNotif?"sm":"sm ghost")+'</div>';
+    h+='<div class="set"><span>'+esc(t("test_norm"))+'</span>'+btn("test",esc(t("test_btn")),"sm ghost")+'</div>';
+    h+='<div class="set"><span>'+esc(t("test_urg"))+'</span>'+btn("testu",esc(t("test_btn")),"sm ghost")+'</div>';
+    h+='<div class="note">'+esc(t("rem_note"))+'</div>';
   }else{
-    var perm="Notification" in window?Notification.permission:"unsupported";
-    h+='<section class="card"><h2>Reminders</h2>';
-    h+='<div class="set"><span>Phone notifications</span>'+btn("notif",S.settings.notif&&perm==="granted"?"On":"Turn on",S.settings.notif&&perm==="granted"?"sm":"sm ghost")+'</div>';
-    h+='<div class="set"><span>Sound</span>'+btn("sound",S.settings.sound?"On":"Off",S.settings.sound?"sm":"sm ghost")+'</div>';
-    h+='<div class="set" style="display:block"><span>"Almost over" alerts</span><div class="chipsrow">'+chips+'</div></div>';
-    h+='<div class="set"><span>Try a reminder</span>'+btn("test","Test","sm ghost")+'</div>';
-    h+='<div class="note">Reminders fire while this page is open.</div></section>';
+    h+='<div class="note">'+esc(t("web_note"))+'</div>';
   }
+  h+='</section>';
 
-  var M=METHODS[S.method]||METHODS.karachi;
-  h+='<footer>Times for '+esc(S.loc.name)+' ('+esc(M.name)+', '+(S.asr==="hanafi"?"Hanafi":"Standard")+' Asr) can differ by a few minutes from your local mosque timetable. Your progress is saved on this phone only. · Version '+APP_VERSION+'</footer>';
+  h+='<footer>'+esc(t("footer",{name:S.loc.name,v:N(APP_VERSION)}))+'</footer>';
 
   document.getElementById("app").innerHTML=h;
   updateLive(now,ws);
@@ -793,30 +847,41 @@ function updateLive(now,ws){
   var hero=document.getElementById("hero");
   var title="Salah Streak";
   if(cw){
-    var left=cw.e-now, total=cw.e-cw.s;
+    var left=cw.e-now, total=cw.e-cw.s, nm=pinfo(cw.id,cw.jum).name;
     if(cd)cd.textContent=fmtCD(left);
     var bar=document.getElementById("bar");
     if(bar)bar.style.width=Math.min(100,Math.max(0,(now-cw.s)/total*100))+"%";
     var urgent=!isDone(cw)&&urgentMs()>0&&left<urgentMs();
     if(hero){if(urgent)hero.classList.add("urgent");else hero.classList.remove("urgent");}
     var bub=document.getElementById("bubble");
-    if(bub&&urgent)bub.textContent="Hurry! Only "+Math.ceil(left/60000)+" min left for "+pinfo(cw.id).name+"! ⏳";
+    if(bub&&urgent)bub.textContent=t("m_hurry",{m:N(Math.ceil(left/60000)),p:nm});
     var nx=document.getElementById("nx");
     if(nx&&nw)nx.textContent=fmtCD(nw.s-now);
-    title=pinfo(cw.id).name+" · "+fmtCD(left)+" left";
+    title=nm+" · "+fmtCD(left);
   }else if(nw){
     if(cd)cd.textContent=fmtCD(nw.s-now);
-    title=pinfo(nw.id).name+" in "+fmtCD(nw.s-now);
+    title=pinfo(nw.id,nw.jum).name+" · "+fmtCD(nw.s-now);
   }
   document.title=title;
 }
 
 function tick(){
   var now=Date.now(), ws=windowsFor(now);
-  checkReminders(now,ws);
   var k=stateKey(now), p=dk(now);
-  var ae=document.activeElement, typing=!!(ae&&ae.id==="locq");
+  var ae=document.activeElement, typing=!!(ae&&(ae.id==="locq"||ae.id==="mosque"));
+  if(!S.lang)return;
   if((k!==curKey||p.s===0)&&!typing){render();}else{updateLive(now,ws);}
+}
+
+/* ---------- language switching ---------- */
+function setLang(code){
+  if(!TR[code])return;
+  var first=!S.lang;
+  S.lang=code;
+  S.digits=(code==="bn")?"local":"latn";
+  if(S.h24===null||first)S.h24=(code==="fr"||code==="tr"||code==="id");
+  save();applyLang();curKey="";
+  render();scheduleNative();
 }
 
 /* ---------- events ---------- */
@@ -824,7 +889,8 @@ document.addEventListener("click",function(ev){
   var el=ev.target.closest?ev.target.closest("[data-act]"):null;
   if(!el||el.tagName==="SELECT")return;
   var act=el.getAttribute("data-act");
-  if(act==="pray"){logPrayer(el.getAttribute("data-day"),el.getAttribute("data-id"));}
+  if(act==="lang"){setLang(el.getAttribute("data-l"));}
+  else if(act==="pray"){logPrayer(el.getAttribute("data-day"),el.getAttribute("data-id"));}
   else if(act==="upd-get"){var u=updateInfo();if(u&&NAT){window.SalahNative.openUrl(u.url);}}
   else if(act==="upd-later"){var u2=updateInfo();if(u2){S.dismissed=u2.n;save();render();}}
   else if(act==="gps"){useGps();}
@@ -838,56 +904,44 @@ document.addEventListener("click",function(ev){
     w.sort(function(a,b){return b-a;});
     save();scheduleNative();render();
   }
+  else if(act==="h24"){S.h24=!S.h24;save();scheduleNative();render();}
+  else if(act==="digits"){S.digits=S.digits==="local"?"latn":"local";save();scheduleNative();render();}
+  else if(act==="mosclear"){S.mosque="";save();scheduleNative();render();}
   else if(act==="tahnotif"){S.settings.tahNotif=!S.settings.tahNotif;save();scheduleNative();render();}
   else if(act==="sound"){S.settings.sound=!S.settings.sound;save();if(S.settings.sound)chime(false);render();}
-  else if(act==="test"){
-    if(NAT){
-      if(nperm!=="granted"){toast("Turn on background reminders first.");return;}
-      window.SalahNative.testNow(false).then(function(ok){toast(ok?"Test reminder coming in 3 seconds. You can close the app to try it 🔔":"Couldn't schedule the test.");});
-    }else{notify("Test reminder 🕌","This is how your Salah reminders will look.");}
-  }
-  else if(act==="testu"){
-    if(NAT){
-      if(nperm!=="granted"){toast("Turn on background reminders first.");return;}
-      window.SalahNative.testNow(true).then(function(ok){toast(ok?"Alert coming in 3 seconds. Close the app and listen 🚨":"Couldn't schedule the test.");});
-    }
+  else if(act==="test"||act==="testu"){
+    if(!NAT)return;
+    if(nperm!=="granted"){toast(t("t_turn_first"));return;}
+    var urgent=act==="testu";
+    var title=urgent?t("n_testu_title",{p:t("p_asr")}):t("n_test_title");
+    var body=urgent?t("n_testu_body",{m:N(5)}):t("n_test_body");
+    window.SalahNative.testNow(urgent,title,body).then(function(ok){toast(ok?t(urgent?"t_testu_sent":"t_test_sent"):t("t_test_fail"));});
   }
   else if(act==="exact"){if(NAT){window.SalahNative.openExactSettings();}}
   else if(act==="notif"){
-    if(NAT){
-      window.SalahNative.requestPermission().then(function(r){
-        nperm=r;
-        if(r==="granted"){toast("Background reminders on ✅","green");scheduleNative();}
-        else{toast("Notifications are blocked. Enable them in phone Settings > Apps > Salah Streak.");}
-        refreshNative(render);
-      });
-      return;
-    }
-    if(!("Notification" in window)){toast("This browser doesn't support notifications. In-app reminders still work.");return;}
-    if(S.settings.notif&&Notification.permission==="granted"){S.settings.notif=false;save();render();return;}
-    try{
-      var pr=Notification.requestPermission(function(res){afterPerm(res);});
-      if(pr&&pr.then)pr.then(afterPerm);
-    }catch(e){toast("Notifications are blocked here. In-app reminders still work.");}
+    if(!NAT)return;
+    window.SalahNative.requestPermission().then(function(res){
+      nperm=res;
+      if(res==="granted"){toast(t("t_notif_on"),"green");scheduleNative();}
+      else{toast(t("t_notif_blocked"));}
+      refreshNative(render);
+    });
   }
 });
-function afterPerm(res){
-  if(res==="granted"){S.settings.notif=true;save();toast("Notifications on ✅","green");}
-  else{S.settings.notif=false;save();toast("Notifications not allowed. In-app reminders still work.");}
-  render();
-}
 document.addEventListener("change",function(ev){
   var el=ev.target;
   if(!el||!el.getAttribute)return;
   var act=el.getAttribute("data-act");
-  if(act==="method"&&METHODS[el.value]){S.method=el.value;S.manual=true;save();scheduleNative();render();}
-  else if(act==="asr"){S.asr=el.value==="standard"?"standard":"hanafi";S.manual=true;save();scheduleNative();render();}
+  if(act==="langsel"){setLang(el.value);}
+  else if(act==="friday"){S.friday=el.value==="dhuhr"?"dhuhr":"jumuah";save();curKey="";render();scheduleNative();}
+  else if(el.id==="mosque"){S.mosque=/^\d\d:\d\d$/.test(el.value)?el.value:"";save();scheduleNative();render();}
 });
 document.addEventListener("input",function(ev){if(ev.target&&ev.target.id==="locq")locQuery=ev.target.value;});
 document.addEventListener("keydown",function(ev){
   if(ev.key==="Enter"&&ev.target&&ev.target.id==="locq"){locQuery=ev.target.value;doSearch();}
 });
 
+applyLang();
 render();
 refreshNative(function(){render();scheduleNative();});
 checkUpdate(false);

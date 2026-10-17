@@ -1,1 +1,1 @@
-v4: Prayer times for any city in the world (GPS or search). New "almost over" alerts with their own sound and firmer wording. Tahajjud (+25 XP) and 9 new badges. Fixed the phone status bar overlapping the app.
+v5: Jumu'ah on Fridays (+15 XP, optional reminder before your mosque's time) and two new Jumu'ah badges. The app now speaks 8 languages: English, বাংলা, اردو, العربية, Bahasa Indonesia, Bahasa Melayu, Türkçe, Français. Prayer calculation is chosen automatically for your location.
