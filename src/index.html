@@ -3,13 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Salah Streak · Dhaka</title>
 <meta name="theme-color" content="#58cc02">
+<title>Salah Streak</title>
 <style>
 :root{
   box-sizing:border-box;
-  padding-top:env(safe-area-inset-top,0px);
-  padding-bottom:env(safe-area-inset-bottom,0px);
+  padding-top:var(--safe-area-inset-top,env(safe-area-inset-top,0px));
+  padding-bottom:var(--safe-area-inset-bottom,env(safe-area-inset-bottom,0px));
+  padding-left:var(--safe-area-inset-left,env(safe-area-inset-left,0px));
+  padding-right:var(--safe-area-inset-right,env(safe-area-inset-right,0px));
   --bg:#f3faf5; --card:#ffffff; --ink:#17302a; --muted:#62796f; --line:#dce9e0;
   --green:#58cc02; --green-d:#46a302; --gold:#ffc800; --gold-d:#d9a400;
   --red:#ff4b4b; --red-d:#d63a3a; --blue:#1cb0f6; --soft:#e7f7d8; --dot:#d6e2da;
@@ -31,8 +33,8 @@ html,body{margin:0;background:var(--bg);color:var(--ink);
 body{min-height:100%}
 #app{max-width:520px;margin:0 auto;padding:14px 14px 40px}
 header{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px}
-.brand{font-weight:900;font-size:20px;letter-spacing:-.01em}
-.brand small{display:block;font-size:12px;color:var(--muted);font-weight:700;letter-spacing:0}
+.brand{font-weight:900;font-size:20px;letter-spacing:-.01em;min-width:0}
+.brand small{display:block;font-size:12px;color:var(--muted);font-weight:700;letter-spacing:0;overflow-wrap:anywhere}
 .chips{display:flex;gap:8px}
 .chip{background:var(--card);border:2px solid var(--line);border-radius:99px;padding:6px 12px;font-weight:900;font-size:15px;white-space:nowrap}
 .chip.flame{color:#ff9600}.chip.xp{color:var(--gold-d)}
@@ -76,6 +78,7 @@ ul{list-style:none;margin:0;padding:0}
 .row .nm small{color:var(--muted);margin-left:4px}
 .row .tm{font-size:13px;color:var(--muted)}
 .row.cur{background:var(--soft);margin:0 -10px;padding:11px 10px;border-radius:14px;border-bottom:0}
+.row.opt .nm b{color:#5b6cff}
 .tag{font-weight:900;font-size:13px;white-space:nowrap}
 .tag.ok{color:var(--green-d)}.tag.late{color:var(--gold-d)}.tag.lock{color:var(--muted)}
 .week{display:flex;justify-content:space-between;gap:4px}
@@ -84,6 +87,8 @@ ul{list-style:none;margin:0;padding:0}
 .dots{display:flex;flex-direction:column;align-items:center;gap:3px;margin-top:6px}
 .dots i{width:14px;height:14px;border-radius:50%;background:var(--dot);display:block}
 .dots i.ok{background:var(--green)}.dots i.late{background:var(--gold)}
+.dots i.tah{background:#5b6cff;width:10px;height:10px;margin-top:3px}
+.dots i.tahoff{width:10px;height:10px;margin-top:3px;opacity:.5}
 .dots.perfect{filter:drop-shadow(0 0 4px var(--green))}
 .badges{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
 .badge{text-align:center;font-size:11px;line-height:1.2;color:var(--muted)}
@@ -92,9 +97,17 @@ ul{list-style:none;margin:0;padding:0}
 .badge.got{color:var(--ink)}
 .set{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0}
 .set span{font-size:15px}
-.set select{font:inherit;font-weight:800;padding:6px 8px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+.set select{font:inherit;font-weight:800;padding:6px 8px;border-radius:10px;border:2px solid var(--line);background:var(--card);color:var(--ink);max-width:62%}
 .note{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:8px;font-weight:700}
-#toasts{position:fixed;left:0;right:0;top:calc(env(safe-area-inset-top,0px) + 10px);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:60;pointer-events:none}
+.locrow{display:flex;gap:8px;align-items:center;margin:8px 0}
+.locin{flex:1;min-width:0;font:inherit;font-weight:700;padding:10px 12px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink)}
+.res{display:block;width:100%;text-align:left;font:inherit;font-weight:700;padding:10px 12px;margin-top:6px;border-radius:12px;border:2px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+.res:active{background:var(--soft)}
+.chipsrow{display:flex;flex-wrap:wrap;gap:8px;padding:6px 0 4px}
+.chipb{font:inherit;font-weight:900;font-size:13px;padding:8px 12px;border-radius:99px;border:2px solid var(--line);background:var(--card);color:var(--muted);cursor:pointer}
+.chipb.on{background:var(--soft);border-color:var(--green);color:var(--green-d)}
+.upd{border-color:var(--green)}
+#toasts{position:fixed;left:0;right:0;top:calc(var(--safe-area-inset-top,env(safe-area-inset-top,0px)) + 10px);display:flex;flex-direction:column;align-items:center;gap:8px;z-index:60;pointer-events:none}
 .toast{background:#17302a;color:#fff;border-radius:14px;padding:10px 16px;font-weight:800;font-size:14px;max-width:92%;box-shadow:0 6px 20px rgba(0,0,0,.25);animation:pop .35s ease}
 .toast.gold{background:var(--gold);color:#4a3600}
 .toast.green{background:var(--green-d)}
@@ -102,7 +115,6 @@ ul{list-style:none;margin:0;padding:0}
 .confetti{position:fixed;inset:0;pointer-events:none;overflow:hidden;z-index:55}
 .confetti i{position:absolute;top:-14px;width:8px;height:13px;border-radius:2px;animation:fall linear forwards}
 @keyframes fall{to{transform:translateY(105vh) rotate(720deg)}}
-.upd{border-color:var(--green)}
 footer{font-size:12px;color:var(--muted);text-align:center;line-height:1.5;margin-top:6px}
 </style>
 </head>
@@ -115,7 +127,6 @@ footer{font-size:12px;color:var(--muted);text-align:center;line-height:1.5;margi
 (function(){
 "use strict";
 /* ---------- constants ---------- */
-var LAT=23.8103, LNG=90.4125, TZ=6; // Dhaka, UTC+6
 var PR=[
   {id:"fajr",name:"Fajr",bn:"ফজর",icon:"🌅"},
   {id:"dhuhr",name:"Dhuhr",bn:"যোহর",icon:"☀️"},
@@ -123,38 +134,65 @@ var PR=[
   {id:"maghrib",name:"Maghrib",bn:"মাগরিব",icon:"🌇"},
   {id:"isha",name:"Isha",bn:"এশা",icon:"🌙"}
 ];
+var TAH={id:"tahajjud",name:"Tahajjud",bn:"তাহাজ্জুদ",icon:"🌌"};
 var KEY="salah_streak_v1";
 var APP_VERSION=parseInt("__APP_VERSION__",10)||0;
 var STORE_BUILD="__STORE_BUILD__"==="1";
 var REPO="imrajitt-cmd/salah-streak";
+var DEFAULT_LOC={name:"Dhaka, Bangladesh",lat:23.8103,lng:90.4125,tz:"Asia/Dhaka"};
+var WARN_OPTS=[30,20,15,10,5];
+var METHODS={
+  karachi:{name:"Karachi (Univ. of Islamic Sciences)",fajr:18,isha:18},
+  mwl:{name:"Muslim World League",fajr:18,isha:17},
+  isna:{name:"ISNA (North America)",fajr:15,isha:15},
+  egypt:{name:"Egyptian General Authority",fajr:19.5,isha:17.5},
+  makkah:{name:"Umm al-Qura (Makkah)",fajr:18.5,ishaMin:90},
+  turkey:{name:"Diyanet (Turkey)",fajr:18,isha:17}
+};
 function esc(t){return String(t).replace(/[&<>"']/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c];});}
 
 /* ---------- storage (always guarded) ---------- */
 var mem={};
 function sget(k){try{return window.localStorage.getItem(k);}catch(e){return mem[k]==null?null:mem[k];}}
 function sset(k,v){try{window.localStorage.setItem(k,v);}catch(e){mem[k]=v;}}
-var S={log:{},settings:{notif:false,sound:true,warn:15},notified:{},badges:[],update:null,lastCheck:0,dismissed:0};
+var S={log:{},settings:{notif:false,sound:true,warns:[30,15,5],tahNotif:false},notified:{},badges:[],
+  update:null,lastCheck:0,dismissed:0,loc:null,locSet:false,method:"karachi",asr:"hanafi",manual:false};
 try{
   var raw=sget(KEY);
   if(raw){
-    var p=JSON.parse(raw);
-    if(p&&typeof p==="object"){
-      S.log=p.log||{};
-      S.settings=Object.assign(S.settings,p.settings||{});
-      S.notified=p.notified||{};
-      S.badges=p.badges||[];
-      S.update=p.update||null;S.lastCheck=p.lastCheck||0;S.dismissed=p.dismissed||0;
+    var p0=JSON.parse(raw);
+    if(p0&&typeof p0==="object"){
+      S.log=p0.log||{};
+      var st0=p0.settings||{};
+      S.settings.notif=!!st0.notif;
+      S.settings.sound=st0.sound!==false;
+      S.settings.tahNotif=!!st0.tahNotif;
+      if(Array.isArray(st0.warns)){S.settings.warns=st0.warns;}
+      else if(typeof st0.warn==="number"){S.settings.warns=[st0.warn,5];}
+      S.notified=p0.notified||{};
+      S.badges=p0.badges||[];
+      S.update=p0.update||null;S.lastCheck=p0.lastCheck||0;S.dismissed=p0.dismissed||0;
+      S.loc=p0.loc||null;S.locSet=!!p0.locSet;
+      S.method=METHODS[p0.method]?p0.method:"karachi";
+      S.asr=p0.asr==="standard"?"standard":"hanafi";
+      S.manual=!!p0.manual;
     }
   }
 }catch(e){}
+(function(){
+  var w=S.settings.warns.filter(function(v){return WARN_OPTS.indexOf(v)>=0;});
+  w=w.filter(function(v,i){return w.indexOf(v)===i;}).sort(function(a,b){return b-a;});
+  S.settings.warns=w;
+  var l=S.loc;
+  if(!l||typeof l.lat!=="number"||typeof l.lng!=="number"||typeof l.tz!=="string"||!l.name){S.loc={name:DEFAULT_LOC.name,lat:DEFAULT_LOC.lat,lng:DEFAULT_LOC.lng,tz:DEFAULT_LOC.tz};}
+})();
 function save(){
-  // prune old reminder keys
   var keys=Object.keys(S.notified);
-  if(keys.length>120){keys.sort();keys.slice(0,keys.length-120).forEach(function(k){delete S.notified[k];});}
+  if(keys.length>200){keys.sort();keys.slice(0,keys.length-200).forEach(function(k){delete S.notified[k];});}
   sset(KEY,JSON.stringify(S));
 }
 
-/* ---------- prayer time maths (Karachi: Fajr/Isha 18°, Hanafi Asr) ---------- */
+/* ---------- prayer time maths ---------- */
 var rad=Math.PI/180;
 function sin(a){return Math.sin(a*rad);}
 function cos(a){return Math.cos(a*rad);}
@@ -174,16 +212,29 @@ function sunPos(jd){
   var RA=fixH(Math.atan2(cos(e)*sin(L),cos(L))/rad/15);
   return {decl:Math.asin(sin(e)*sin(L))/rad, eqt:q/15-RA};
 }
+var fmtCache={};
+function tzOff(tz,ms){
+  try{
+    var f=fmtCache[tz]||(fmtCache[tz]=new Intl.DateTimeFormat("en-US",{timeZone:tz,hourCycle:"h23",year:"numeric",month:"2-digit",day:"2-digit",hour:"2-digit",minute:"2-digit",second:"2-digit"}));
+    var o={};
+    f.formatToParts(new Date(ms)).forEach(function(x){o[x.type]=x.value;});
+    var h=+o.hour;if(h===24)h=0;
+    var asUTC=Date.UTC(+o.year,+o.month-1,+o.day,h,+o.minute,+o.second);
+    return Math.round((asUTC-Math.floor(ms/1000)*1000)/60000);
+  }catch(e){return -new Date(ms).getTimezoneOffset();}
+}
 var tcache={};
 function times(y,m,d){
-  var ck=y+"-"+m+"-"+d;
+  var LAT=S.loc.lat, LNG=S.loc.lng;
+  var ck=[y,m,d,LAT,LNG,S.loc.tz,S.method,S.asr].join("|");
   if(tcache[ck])return tcache[ck];
+  var M=METHODS[S.method]||METHODS.karachi;
   var jd=julian(y,m,d)-LNG/(15*24);
   function mid(t){return fixH(12-sunPos(jd+t).eqt);}
   function ang(a,t,ccw){
     var dec=sunPos(jd+t).decl;
     var x=(-sin(a)-sin(dec)*sin(LAT))/(cos(dec)*cos(LAT));
-    x=Math.max(-1,Math.min(1,x));
+    if(x<-1||x>1)return NaN;
     var v=Math.acos(x)/rad/15, n=mid(t);
     return ccw?n-v:n+v;
   }
@@ -193,25 +244,49 @@ function times(y,m,d){
     return ang(a,t,false);
   }
   var h={
-    fajr:ang(18,5/24,true),
+    fajr:ang(M.fajr,5/24,true),
     sunrise:ang(0.833,6/24,true),
     dhuhr:mid(0.5),
-    asr:asr(2,13/24),
+    asr:asr(S.asr==="hanafi"?2:1,13/24),
     sunset:ang(0.833,18/24,false),
-    isha:ang(18,18/24,false)
+    isha:M.ishaMin?0:ang(M.isha,18/24,false)
   };
+  // polar day / night fallbacks
+  if(isNaN(h.sunrise))h.sunrise=h.dhuhr-6;
+  if(isNaN(h.sunset))h.sunset=h.dhuhr+6;
+  var night=fixH(h.sunrise-h.sunset);
+  if(night<1)night=12;
+  function portion(a){return a/60*night;}
+  // high latitudes: angle-based rule (never leave Fajr or Isha undefined)
+  if(isNaN(h.fajr)||fixH(h.sunrise-h.fajr)>portion(M.fajr))h.fajr=h.sunrise-portion(M.fajr);
+  if(M.ishaMin){h.isha=h.sunset+M.ishaMin/60;}
+  else if(isNaN(h.isha)||fixH(h.isha-h.sunset)>portion(M.isha)){h.isha=h.sunset+portion(M.isha);}
+  if(isNaN(h.asr))h.asr=(h.dhuhr+h.sunset)/2;
   var out={};
   Object.keys(h).forEach(function(k){
-    var ms=Date.UTC(y,m-1,d)+(h[k]-LNG/15)*3600000; // local solar -> UTC
-    out[k]=Math.round(ms/60000)*60000;
+    out[k]=Math.round((Date.UTC(y,m-1,d)+(h[k]-LNG/15)*3600000)/60000)*60000;
   });
+  // keep the instants on the civil date of the chosen time zone
+  var off=tzOff(S.loc.tz,out.dhuhr);
+  var localDay=Math.floor((out.dhuhr+off*60000)/86400000);
+  var want=Math.round(Date.UTC(y,m-1,d)/86400000);
+  var delta=want-localDay;
+  if(delta){Object.keys(out).forEach(function(k){out[k]+=delta*86400000;});}
   tcache[ck]=out;
   return out;
 }
+function suggestMethod(lat,lng){
+  if(lat>=22&&lat<=32&&lng>=24&&lng<=34.9)return {m:"egypt",asr:"standard"};
+  if(lat>=12&&lat<=33&&lng>=34&&lng<=60)return {m:"makkah",asr:"standard"};
+  if(lat>=5&&lat<=37&&lng>=60&&lng<=93)return {m:"karachi",asr:"hanafi"};
+  if(lat>=36&&lat<=42&&lng>=26&&lng<=45)return {m:"turkey",asr:"standard"};
+  if(lat>=14&&lat<=72&&lng>=-170&&lng<=-50)return {m:"isna",asr:"standard"};
+  return {m:"mwl",asr:"standard"};
+}
 
-/* ---------- Dhaka date helpers ---------- */
+/* ---------- date helpers (in the chosen city's time zone) ---------- */
 function dk(ms){
-  var d=new Date(ms+TZ*3600000);
+  var off=tzOff(S.loc.tz,ms), d=new Date(ms+off*60000);
   return {y:d.getUTCFullYear(),m:d.getUTCMonth()+1,d:d.getUTCDate(),h:d.getUTCHours(),mi:d.getUTCMinutes(),s:d.getUTCSeconds(),wd:d.getUTCDay()};
 }
 function pad(n){return (n<10?"0":"")+n;}
@@ -222,27 +297,55 @@ function fmtCD(ms){
   ms=Math.max(0,ms);var s=Math.floor(ms/1000);
   return pad(Math.floor(s/3600))+":"+pad(Math.floor(s%3600/60))+":"+pad(s%60);
 }
-function pinfo(id){return PR.filter(function(x){return x.id===id;})[0];}
+function pinfo(id){return id==="tahajjud"?TAH:PR.filter(function(x){return x.id===id;})[0];}
 
+function dayWindows(y,m,d){
+  var b=shift(y,m,d,1), t=times(y,m,d), tn=times(b[0],b[1],b[2]), k=key(y,m,d);
+  return [
+    {day:k,id:"fajr",s:t.fajr,e:t.sunrise},
+    {day:k,id:"dhuhr",s:t.dhuhr,e:t.asr},
+    {day:k,id:"asr",s:t.asr,e:t.sunset},
+    {day:k,id:"maghrib",s:t.sunset,e:t.isha},
+    {day:k,id:"isha",s:t.isha,e:tn.fajr}
+  ];
+}
 function windowsFor(now){
   var p=dk(now),out=[];
   for(var n=-1;n<=1;n++){
-    var a=shift(p.y,p.m,p.d,n), b=shift(a[0],a[1],a[2],1);
-    var t=times(a[0],a[1],a[2]), tn=times(b[0],b[1],b[2]), k=key(a[0],a[1],a[2]);
-    out.push({day:k,id:"fajr",s:t.fajr,e:t.sunrise});
-    out.push({day:k,id:"dhuhr",s:t.dhuhr,e:t.asr});
-    out.push({day:k,id:"asr",s:t.asr,e:t.sunset});
-    out.push({day:k,id:"maghrib",s:t.sunset,e:t.isha});
-    out.push({day:k,id:"isha",s:t.isha,e:tn.fajr});
+    var a=shift(p.y,p.m,p.d,n);
+    out=out.concat(dayWindows(a[0],a[1],a[2]));
   }
+  return out;
+}
+// Tahajjud: last third of the night (Maghrib to the next Fajr), up to Fajr
+function tahWindow(y,m,d){
+  var b=shift(y,m,d,1), t=times(y,m,d), tn=times(b[0],b[1],b[2]);
+  var night=tn.fajr-t.sunset;
+  return {day:key(y,m,d),id:"tahajjud",s:Math.round((tn.fajr-night/3)/60000)*60000,e:tn.fajr};
+}
+function tahWindows(now){
+  var p=dk(now),out=[];
+  for(var n=-1;n<=1;n++){var a=shift(p.y,p.m,p.d,n);out.push(tahWindow(a[0],a[1],a[2]));}
   return out;
 }
 function isDone(w){return !!(S.log[w.day]&&S.log[w.day][w.id]);}
 function dayCount(k){var l=S.log[k]||{};return PR.filter(function(x){return l[x.id];}).length;}
 
 /* ---------- stats, XP, badges ---------- */
+function runs(keys,pred){
+  var res=[],run=0,prev=null;
+  keys.forEach(function(k){
+    if(!pred(k)){if(run)res.push(run);run=0;prev=null;return;}
+    var t=Date.parse(k+"T00:00:00Z");
+    if(prev!==null&&t-prev===86400000)run++;else{if(run)res.push(run);run=1;}
+    prev=t;
+  });
+  if(run)res.push(run);
+  return res;
+}
+function maxOf(a){return a.length?Math.max.apply(null,a):0;}
 function stats(){
-  var xp=0,prayers=0,onTime=0,fajrOn=0,perfect=0;
+  var xp=0,prayers=0,onTime=0,fajrOn=0,perfect=0,tah=0;
   var keys=Object.keys(S.log).sort();
   keys.forEach(function(k){
     var l=S.log[k],c=0;
@@ -252,6 +355,7 @@ function stats(){
       if(r.ok){xp+=10;onTime++;if(x.id==="fajr")fajrOn++;}else{xp+=3;}
     });
     if(c===5){perfect++;xp+=20;}
+    if(l.tahajjud){tah++;xp+=25;}
   });
   var p=dk(Date.now()),streak=0;
   var off=dayCount(key(p.y,p.m,p.d))===5?0:-1;
@@ -260,25 +364,31 @@ function stats(){
     if(dayCount(key(a[0],a[1],a[2]))===5)streak++;else break;
     if(streak>3650)break;
   }
-  var best=0,run=0,prev=null;
-  keys.forEach(function(k){
-    if(dayCount(k)!==5){run=0;prev=null;return;}
-    var t=Date.parse(k+"T00:00:00Z");
-    run=(prev!==null&&t-prev===86400000)?run+1:1;
-    prev=t;best=Math.max(best,run);
-  });
-  best=Math.max(best,streak);
-  return {xp:xp,prayers:prayers,onTime:onTime,fajrOn:fajrOn,perfect:perfect,streak:streak,best:best,level:Math.floor(xp/100)+1};
+  var pr=runs(keys,function(k){return dayCount(k)===5;});
+  var best=Math.max(maxOf(pr),streak);
+  var comeback=pr.some(function(r,i){return i>0&&r>=3&&maxOf(pr.slice(0,i))>=3;});
+  var fajrBest=maxOf(runs(keys,function(k){var f=S.log[k].fajr;return !!(f&&f.ok);}));
+  var tahBest=maxOf(runs(keys,function(k){return !!S.log[k].tahajjud;}));
+  return {xp:xp,prayers:prayers,onTime:onTime,fajrOn:fajrOn,perfect:perfect,tah:tah,tahBest:tahBest,fajrBest:fajrBest,comeback:comeback,streak:streak,best:best,level:Math.floor(xp/100)+1};
 }
 var BADGES=[
   {id:"first",em:"🌱",name:"First step",test:function(s){return s.prayers>=1;}},
   {id:"perfect",em:"⭐",name:"Perfect day",test:function(s){return s.perfect>=1;}},
   {id:"s3",em:"🔥",name:"3-day streak",test:function(s){return s.best>=3;}},
   {id:"s7",em:"🏅",name:"7-day streak",test:function(s){return s.best>=7;}},
+  {id:"s14",em:"🚀",name:"14-day streak",test:function(s){return s.best>=14;}},
   {id:"s30",em:"👑",name:"30-day streak",test:function(s){return s.best>=30;}},
   {id:"fajr10",em:"🌄",name:"Fajr fighter ×10",test:function(s){return s.fajrOn>=10;}},
+  {id:"early",em:"🐦",name:"Early bird (7 Fajr in a row)",test:function(s){return s.fajrBest>=7;}},
   {id:"ot50",em:"⏱️",name:"50 on time",test:function(s){return s.onTime>=50;}},
-  {id:"p100",em:"💎",name:"100 prayers",test:function(s){return s.prayers>=100;}}
+  {id:"p100",em:"💎",name:"100 prayers",test:function(s){return s.prayers>=100;}},
+  {id:"p500",em:"🏆",name:"500 prayers",test:function(s){return s.prayers>=500;}},
+  {id:"pf10",em:"🌟",name:"10 perfect days",test:function(s){return s.perfect>=10;}},
+  {id:"comeback",em:"💪",name:"Comeback",test:function(s){return s.comeback;}},
+  {id:"owl",em:"🦉",name:"Night owl (first Tahajjud)",test:function(s){return s.tah>=1;}},
+  {id:"tah7",em:"🌌",name:"7 Tahajjud nights in a row",test:function(s){return s.tahBest>=7;}},
+  {id:"tah10",em:"🌠",name:"Tahajjud ×10",test:function(s){return s.tah>=10;}},
+  {id:"tah30",em:"✨",name:"Tahajjud ×30",test:function(s){return s.tah>=30;}}
 ];
 function earned(s){return BADGES.filter(function(b){return b.test(s);}).map(function(b){return b.id;});}
 
@@ -334,25 +444,51 @@ function refreshNative(cb){
     return window.SalahNative.exactAllowed();
   }).then(function(x){nexact=x;if(cb)cb();}).catch(function(){if(cb)cb();});
 }
+// Reminder wording: it gets firmer as the end of the prayer gets closer.
+var PH={
+  early:[
+    ["⏳ {p} is running out","{m} min left for {p} (ends {t}). Pray now and keep your streak 🔥"],
+    ["⏳ {p} ending soon","Salah time is slipping away, {m} min left. Do it now before it ends!"],
+    ["🕌 Don't miss {p}","Only {m} minutes remain. Take a moment for {p} before it ends."]
+  ],
+  mid:[
+    ["⚠️ {p} almost over","Salah time is almost over! Do it now before it ends. {m} min left."],
+    ["⚠️ Only {m} min for {p}","Put everything down and pray {p} now. Your streak depends on it 🔥"],
+    ["⚠️ {p} time is closing","{m} minutes left. Make wudu and pray now!"]
+  ],
+  late:[
+    ["🚨 Last chance for {p}!","Only {m} min left! Salah time is almost over, pray right now!"],
+    ["🚨 {p} ends in {m} min","This is your final reminder. Pray now before the time ends!"],
+    ["🚨 Hurry, {p} is ending","{m} minutes. Don't let it pass. Pray now!"]
+  ]
+};
+function phrase(p,m,t,seed){
+  var tier=m>=20?"early":(m>=10?"mid":"late"), a=PH[tier], v=a[Math.abs(seed)%a.length];
+  function f(s){return s.replace(/\{p\}/g,p).replace(/\{m\}/g,m).replace(/\{t\}/g,t);}
+  return {title:f(v[0]),body:f(v[1])};
+}
 function buildSchedule(now){
-  var items=[],p=dk(now),DAYS=14;
-  for(var n=0;n<DAYS;n++){
-    var a=shift(p.y,p.m,p.d,n), b=shift(a[0],a[1],a[2],1);
-    var t=times(a[0],a[1],a[2]), tn=times(b[0],b[1],b[2]), k=key(a[0],a[1],a[2]);
+  var items=[],p=dk(now),warns=S.settings.warns;
+  for(var n=0;n<30;n++){
+    var a=shift(p.y,p.m,p.d,n), k=key(a[0],a[1],a[2]);
     var dn=Math.floor(Date.UTC(a[0],a[1]-1,a[2])/86400000);
-    var wins=[
-      {id:"fajr",s:t.fajr,e:t.sunrise},{id:"dhuhr",s:t.dhuhr,e:t.asr},
-      {id:"asr",s:t.asr,e:t.sunset},{id:"maghrib",s:t.sunset,e:t.isha},
-      {id:"isha",s:t.isha,e:tn.fajr}
-    ];
-    wins.forEach(function(w,i){
+    dayWindows(a[0],a[1],a[2]).forEach(function(w,i){
       var nm=pinfo(w.id).name, done=!!(S.log[k]&&S.log[k][w.id]);
-      items.push({id:dn*20+i*2,at:w.s,title:nm+" time 🕌",body:"The "+nm+" window just opened ("+fmtT(w.s)+"). Pray on time to keep your streak 🔥"});
-      var wt=w.e-S.settings.warn*60000;
-      if(!done)items.push({id:dn*20+i*2+1,at:wt,title:"⏳ "+nm+" ending soon",body:"About "+S.settings.warn+" min left for "+nm+" (ends "+fmtT(w.e)+"). Don't lose your streak!"});
+      items.push({id:dn*100+i*10,at:w.s,urgent:false,title:nm+" time 🕌",body:"The "+nm+" window just opened ("+fmtT(w.s)+"). Pray on time to keep your streak 🔥"});
+      if(done)return;
+      warns.forEach(function(m){
+        var at=w.e-m*60000, ph=phrase(nm,m,fmtT(w.e),dn+i+m);
+        items.push({id:dn*100+i*10+1+WARN_OPTS.indexOf(m),at:at,urgent:true,title:ph.title,body:ph.body});
+      });
     });
+    if(S.settings.tahNotif){
+      var tw=tahWindow(a[0],a[1],a[2]);
+      if(!(S.log[k]&&S.log[k].tahajjud)){
+        items.push({id:dn*100+9,at:tw.s,urgent:false,title:"🌌 Last third of the night",body:"Tahajjud time has begun (until "+fmtT(tw.e)+"). It's worth +25 XP."});
+      }
+    }
   }
-  return items;
+  return items.filter(function(i){return i.at>now+2000;}).sort(function(x,y){return x.at-y.at;}).slice(0,400);
 }
 function scheduleNative(){
   if(!NAT)return;
@@ -385,9 +521,9 @@ function checkUpdate(force){
     }).catch(function(){});
 }
 
-/* ---------- reminders ---------- */
+/* ---------- in-page reminders (browser only; the Android app uses real notifications) ---------- */
 function notify(title,body){
-  toast(title+" — "+body,"gold");
+  toast(title+" · "+body,"gold");
   chime(false);
   try{
     if(S.settings.notif&&"Notification" in window&&Notification.permission==="granted"){
@@ -399,40 +535,49 @@ function checkReminders(now,ws){
   if(NAT)return;
   var changed=false;
   ws.forEach(function(w){
-    var nm=pinfo(w.id).name;
-    var k1=w.day+w.id+"s";
+    var nm=pinfo(w.id).name, k1=w.day+w.id+"s";
     if(now>=w.s&&now<w.s+5*60000&&!S.notified[k1]){
       S.notified[k1]=1;changed=true;
-      notify(nm+" time 🕌","The "+nm+" window just opened ("+fmtT(w.s)+"). Keep your streak going!");
+      notify(nm+" time 🕌","The "+nm+" window just opened ("+fmtT(w.s)+").");
     }
-    var wt=w.e-S.settings.warn*60000, k2=w.day+w.id+"w";
-    if(!isDone(w)&&now>=wt&&now<wt+5*60000&&now<w.e&&!S.notified[k2]){
-      S.notified[k2]=1;changed=true;
-      notify("⏳ "+nm+" ending soon","About "+Math.ceil((w.e-now)/60000)+" min left for "+nm+". Don't lose your streak!");
-    }
+    S.settings.warns.forEach(function(m){
+      var wt=w.e-m*60000, k2=w.day+w.id+"w"+m;
+      if(!isDone(w)&&now>=wt&&now<wt+5*60000&&now<w.e&&!S.notified[k2]){
+        S.notified[k2]=1;changed=true;
+        var ph=phrase(nm,m,fmtT(w.e),m);
+        notify(ph.title,ph.body);
+      }
+    });
   });
   if(changed)save();
 }
 
 /* ---------- logging a prayer ---------- */
 function logPrayer(day,id){
-  var now=Date.now();
-  var ws=windowsFor(now);
-  var w=ws.filter(function(x){return x.day===day&&x.id===id;})[0];
-  if(!w||now<w.s||isDone(w))return;
+  var now=Date.now(), w;
+  if(id==="tahajjud"){
+    w=tahWindows(now).filter(function(x){return x.day===day;})[0];
+    if(!w||now<w.s||now>=w.e||isDone(w))return;
+  }else{
+    w=windowsFor(now).filter(function(x){return x.day===day&&x.id===id;})[0];
+    if(!w||now<w.s||isDone(w))return;
+  }
   var before=stats(), bBefore=earned(before);
-  var ok=now<w.e;
+  var ok=id==="tahajjud"?true:now<w.e;
   S.log[day]=S.log[day]||{};
   S.log[day][id]={t:now,ok:ok};
   var after=stats(), bAfter=earned(after);
   S.badges=bAfter;
   save();
   scheduleNative();
-  var gain=after.xp-before.xp, nm=pinfo(id).name;
-  toast((ok?"+10 XP · ":"+3 XP · ")+nm+(ok?" done on time! 🎉":" (qada) logged"),ok?"green":"");
-  chime(ok);
-  if(ok||dayCount(day)===5)confetti();
-  if(dayCount(day)===5){setTimeout(function(){toast("⭐ Perfect day! +20 bonus XP","gold");},700);}
+  var nm=pinfo(id).name;
+  if(id==="tahajjud"){toast("+25 XP · Tahajjud logged 🌌","green");chime(true);confetti();}
+  else{
+    toast((ok?"+10 XP · ":"+3 XP · ")+nm+(ok?" done on time! 🎉":" (qada) logged"),ok?"green":"");
+    chime(ok);
+    if(ok||dayCount(day)===5)confetti();
+    if(dayCount(day)===5){setTimeout(function(){toast("⭐ Perfect day! +20 bonus XP","gold");},700);}
+  }
   if(after.level>before.level){setTimeout(function(){toast("🎊 Level up! You're now level "+after.level,"gold");confetti();},1300);}
   bAfter.forEach(function(b){
     if(bBefore.indexOf(b)<0){
@@ -441,6 +586,51 @@ function logPrayer(day,id){
     }
   });
   render();
+}
+
+/* ---------- location ---------- */
+var locQuery="", locResults=[], locMsg="";
+function getPos(){
+  if(NAT)return window.SalahNative.getPosition();
+  return new Promise(function(res,rej){
+    if(!navigator.geolocation){rej(new Error("no geolocation"));return;}
+    navigator.geolocation.getCurrentPosition(function(p){res({lat:p.coords.latitude,lng:p.coords.longitude});},rej,{timeout:20000});
+  });
+}
+function setLocation(loc){
+  S.loc={name:loc.name,lat:loc.lat,lng:loc.lng,tz:loc.tz};
+  S.locSet=true;
+  if(!S.manual){var sm=suggestMethod(loc.lat,loc.lng);S.method=sm.m;S.asr=sm.asr;}
+  locResults=[];locQuery="";locMsg="";
+  save();curKey="";
+  render();scheduleNative();
+  toast("📍 Location set: "+loc.name,"green");
+}
+function useGps(){
+  locMsg="Finding your location…";render();
+  getPos().then(function(pos){
+    var tz="UTC";
+    try{tz=Intl.DateTimeFormat().resolvedOptions().timeZone||"UTC";}catch(e){}
+    setLocation({name:"My location ("+pos.lat.toFixed(2)+"°, "+pos.lng.toFixed(2)+"°)",lat:pos.lat,lng:pos.lng,tz:tz});
+  }).catch(function(){
+    locMsg="Couldn't get your location. Allow location permission, or search for your city below.";
+    render();
+  });
+}
+function doSearch(){
+  var q=locQuery.trim();
+  if(q.length<2){locMsg="Type at least 2 letters.";render();return;}
+  locMsg="Searching…";locResults=[];render();
+  fetch("https://geocoding-api.open-meteo.com/v1/search?name="+encodeURIComponent(q)+"&count=8&language=en&format=json")
+    .then(function(r){if(!r.ok)throw new Error("http");return r.json();})
+    .then(function(j){
+      locResults=(j.results||[]).filter(function(r){return r.timezone&&typeof r.latitude==="number";}).map(function(r){
+        return {name:[r.name,r.admin1,r.country].filter(function(x,i,a){return x&&a.indexOf(x)===i;}).join(", "),lat:r.latitude,lng:r.longitude,tz:r.timezone};
+      });
+      locMsg=locResults.length?"":"No city found. Try another spelling.";
+    })
+    .catch(function(){locResults=[];locMsg="Couldn't search. Check your internet connection.";})
+    .then(function(){render();});
 }
 
 /* ---------- render ---------- */
@@ -455,24 +645,34 @@ function stateKey(now){
   var ws=windowsFor(now),c=current(now,ws);
   return (c.cw?c.cw.day+c.cw.id:"none")+"|"+(c.nw?c.nw.day+c.nw.id:"")+"|"+(c.cw&&isDone(c.cw)?1:0);
 }
+function urgentMs(){return (S.settings.warns.length?S.settings.warns[0]:0)*60000;}
+function btn(act,label,cls,attrs){return '<button class="btn '+(cls||"")+'" data-act="'+act+'"'+(attrs||"")+'>'+label+'</button>';}
+
 function render(){
   var now=Date.now(), ws=windowsFor(now), c=current(now,ws), cw=c.cw, nw=c.nw;
   var st=stats(), p=dk(now), todayKey=key(p.y,p.m,p.d);
   curKey=stateKey(now);
   var h="";
 
-  h+='<header><div class="brand">🕌 Salah Streak<small>Dhaka, Bangladesh · '+p.d+"/"+p.m+"/"+p.y+'</small></div>'+
+  h+='<header><div class="brand">🕌 Salah Streak<small>'+esc(S.loc.name)+' · '+p.d+'/'+p.m+'/'+p.y+'</small></div>'+
      '<div class="chips"><span class="chip flame">🔥 '+st.streak+'</span><span class="chip xp">⚡ '+st.xp+'</span></div></header>';
 
   var up=updateInfo();
-  if(up){h+='<section class="card upd"><h2>🎁 Update available · v'+up.n+'</h2><div class="note" style="margin:0 0 4px;white-space:pre-wrap">'+esc(up.notes||"A new version is ready.")+'</div><button class="btn" data-act="upd-get">Download update</button><button class="btn ghost" data-act="upd-later">Later</button></section>';}
+  if(up){
+    h+='<section class="card upd"><h2>🎁 Update available · v'+up.n+'</h2><div class="note" style="margin:0 0 4px;white-space:pre-wrap">'+esc(up.notes||"A new version is ready.")+'</div>'+
+       btn("upd-get","Download update")+btn("upd-later","Later","ghost")+'</section>';
+  }
+  if(!S.locSet){
+    h+='<section class="card upd"><h2>📍 Where are you?</h2><div class="note" style="margin:0 0 4px">Prayer times depend on your location. Showing '+esc(S.loc.name)+' for now.</div>'+
+       btn("gps","Use my location")+btn("gotoloc","Search for a city","ghost")+btn("keeploc","Keep "+esc(S.loc.name),"ghost")+'</section>';
+  }
 
-  h+='<div class="lvl"><b>Level '+st.level+'</b><div class="bar gold"><i style="width:'+(st.xp%100)+'%"></i></div><span class="tm" style="font-size:12px;color:var(--muted)">'+(st.xp%100)+'/100</span></div>';
+  h+='<div class="lvl"><b>Level '+st.level+'</b><div class="bar gold"><i style="width:'+(st.xp%100)+'%"></i></div><span style="font-size:12px;color:var(--muted)">'+(st.xp%100)+'/100</span></div>';
 
   // hero
   var msg,done=cw&&isDone(cw);
   if(!cw){msg="Quiet time before the next prayer. Get your wudu ready! 💧";}
-  else if(done){msg="MashaAllah! "+pinfo(cw.id).name+" is done. "+(dayCount(todayKey)<5?"Keep going — finish all 5 today!":"All 5 done today! ⭐");}
+  else if(done){msg="MashaAllah! "+pinfo(cw.id).name+" is done. "+(dayCount(todayKey)<5?"Keep going, finish all 5 today!":"All 5 done today! ⭐");}
   else{msg=pinfo(cw.id).name+" is open. Pray on time to earn +10 XP! "+(st.streak>0?"Your "+st.streak+"-day streak is counting on you 🔥":"");}
   h+='<section class="card hero" id="hero">';
   h+='<div class="mascot"><div class="moon">🌙</div><div class="bubble" id="bubble">'+msg+'</div></div>';
@@ -486,7 +686,7 @@ function render(){
       var r=S.log[cw.day][cw.id];
       h+='<div class="done-pill">✅ Done '+(r.ok?"on time · +10 XP":"· +3 XP")+'</div>';
     }else{
-      h+='<button class="btn" data-act="pray" data-day="'+cw.day+'" data-id="'+cw.id+'">I prayed ✓</button>';
+      h+=btn("pray","I prayed ✓","",' data-day="'+cw.day+'" data-id="'+cw.id+'"');
     }
     if(nw){
       var ni=pinfo(nw.id);
@@ -507,11 +707,21 @@ function render(){
     var isCur=cw&&cw.day===w.day&&cw.id===w.id;
     var act;
     if(r){act=r.ok?'<span class="tag ok">✅ +10</span>':'<span class="tag late">✔ late +3</span>';}
-    else if(isCur){act='<button class="btn sm" data-act="pray" data-day="'+w.day+'" data-id="'+w.id+'">Pray ✓</button>';}
-    else if(now>=w.e){act='<button class="btn sm gold" data-act="pray" data-day="'+w.day+'" data-id="'+w.id+'">Qada</button>';}
+    else if(isCur){act=btn("pray","Pray ✓","sm",' data-day="'+w.day+'" data-id="'+w.id+'"');}
+    else if(now>=w.e){act=btn("pray","Qada","sm gold",' data-day="'+w.day+'" data-id="'+w.id+'"');}
     else{act='<span class="tag lock">🔒</span>';}
     h+='<li class="row'+(isCur?" cur":"")+'"><span class="ic">'+pi.icon+'</span><div class="nm"><b>'+pi.name+'</b><small>'+pi.bn+'</small><div class="tm">'+fmtT(w.s)+' – '+fmtT(w.e)+'</div></div>'+act+'</li>';
   });
+  // Tahajjud (optional, outside the 5 daily prayers)
+  var tws=tahWindows(now);
+  var tw=tws.filter(function(x){return now>=x.s&&now<x.e;})[0]||tws.filter(function(x){return x.s>now;})[0];
+  if(tw){
+    var tr=S.log[tw.day]&&S.log[tw.day].tahajjud, tcur=now>=tw.s&&now<tw.e, tact;
+    if(tr){tact='<span class="tag ok">✅ +25</span>';}
+    else if(tcur){tact=btn("pray","Pray ✓","sm",' data-day="'+tw.day+'" data-id="tahajjud"');}
+    else{tact='<span class="tag lock">🔒</span>';}
+    h+='<li class="row opt'+(tcur&&!tr?" cur":"")+'"><span class="ic">'+TAH.icon+'</span><div class="nm"><b>Tahajjud</b><small>'+TAH.bn+' · optional · +25 XP</small><div class="tm">Last third of the night · '+fmtT(tw.s)+' – '+fmtT(tw.e)+'</div></div>'+tact+'</li>';
+  }
   h+='</ul></section>';
 
   // week
@@ -522,44 +732,57 @@ function render(){
     var wd=new Date(Date.UTC(a[0],a[1]-1,a[2])).getUTCDay();
     h+='<div class="day'+(i===0?" today":"")+'"><b>'+names[wd]+'</b><div class="dots'+(dayCount(k)===5?" perfect":"")+'">';
     PR.forEach(function(x){var r=l[x.id];h+='<i class="'+(r?(r.ok?"ok":"late"):"")+'"></i>';});
-    h+='</div></div>';
+    h+='<i class="'+(l.tahajjud?"tah":"tahoff")+'"></i></div></div>';
   }
-  h+='</div><div class="note">Top to bottom: Fajr, Dhuhr, Asr, Maghrib, Isha. Green = on time, gold = qada. Best streak: '+st.best+' days.</div></section>';
+  h+='</div><div class="note">Top to bottom: Fajr, Dhuhr, Asr, Maghrib, Isha, then the small dot for Tahajjud. Green = on time, gold = qada. Best streak: '+st.best+' days.</div></section>';
 
   // badges
   var got=earned(st);
-  h+='<section class="card"><h2>Badges</h2><div class="badges">';
+  h+='<section class="card"><h2>Badges · '+got.length+'/'+BADGES.length+'</h2><div class="badges">';
   BADGES.forEach(function(b){
     var on=got.indexOf(b.id)>=0;
     h+='<div class="badge '+(on?"got":"locked")+'"><span class="em">'+b.em+'</span>'+b.name+'</div>';
   });
   h+='</div></section>';
 
+  // location and calculation
+  h+='<section class="card" id="loccard"><h2>Location &amp; times</h2>';
+  h+='<div class="set"><span>📍 '+esc(S.loc.name)+'</span>'+btn("gps","Use GPS","sm")+'</div>';
+  h+='<div class="locrow"><input id="locq" class="locin" type="text" placeholder="Search a city, e.g. London" value="'+esc(locQuery)+'" autocomplete="off">'+btn("locsearch","Search","sm")+'</div>';
+  if(locMsg)h+='<div class="note">'+esc(locMsg)+'</div>';
+  locResults.forEach(function(r,i){h+='<button class="res" data-act="locpick" data-i="'+i+'">'+esc(r.name)+'</button>';});
+  h+='<div class="set"><span>Method</span><select data-act="method">';
+  Object.keys(METHODS).forEach(function(k){h+='<option value="'+k+'"'+(S.method===k?" selected":"")+'>'+esc(METHODS[k].name)+'</option>';});
+  h+='</select></div>';
+  h+='<div class="set"><span>Asr</span><select data-act="asr"><option value="standard"'+(S.asr==="standard"?" selected":"")+'>Standard (Shafi, Maliki, Hanbali)</option><option value="hanafi"'+(S.asr==="hanafi"?" selected":"")+'>Hanafi</option></select></div>';
+  h+='<div class="note">City search sends the name you type to the free Open-Meteo service. Your GPS position stays on your phone and only approximate location is used. Method and Asr are chosen for your region; change them to match your local mosque. Very far north or south, some times are estimates.</div></section>';
+
   // reminders
+  var chips='';
+  WARN_OPTS.forEach(function(m){chips+='<button class="chipb'+(S.settings.warns.indexOf(m)>=0?" on":"")+'" data-act="warnchip" data-v="'+m+'">'+m+' min</button>';});
   if(NAT){
     var on=nperm==="granted";
     h+='<section class="card"><h2>Reminders</h2>';
-    h+='<div class="set"><span>Background reminders</span><button class="btn sm '+(on?"":"ghost")+'" data-act="notif">'+(on?"On":"Turn on")+'</button></div>';
-    h+='<div class="set"><span>Exact timing</span><button class="btn sm '+(nexact?"":"ghost")+'" data-act="exact">'+(nexact?"On":"Allow")+'</button></div>';
-    h+='<div class="set"><span>Sound effects</span><button class="btn sm '+(S.settings.sound?"":"ghost")+'" data-act="sound">'+(S.settings.sound?"On":"Off")+'</button></div>';
-    h+='<div class="set"><span>Warn me before a prayer ends</span><select data-act="warn">';
-    [10,15,20,30].forEach(function(v){h+='<option value="'+v+'"'+(S.settings.warn===v?" selected":"")+'>'+v+' min</option>';});
-    h+='</select></div>';
-    h+='<div class="set"><span>Try a reminder (arrives in 3 sec)</span><button class="btn sm ghost" data-act="test">Test</button></div>';
-    h+='<div class="note">Reminders are scheduled on your phone for the next 14 days and arrive even when the app is closed. Open the app at least once every two weeks. If reminders go missing, set this app\'s battery usage to <b>Unrestricted</b> / allow auto-start in your phone settings (needed on Xiaomi, Oppo, Vivo, Realme and some Samsung phones).</div></section>';
+    h+='<div class="set"><span>Background reminders</span>'+btn("notif",on?"On":"Turn on",on?"sm":"sm ghost")+'</div>';
+    h+='<div class="set"><span>Exact timing</span>'+btn("exact",nexact?"On":"Allow",nexact?"sm":"sm ghost")+'</div>';
+    h+='<div class="set"><span>Sound effects in the app</span>'+btn("sound",S.settings.sound?"On":"Off",S.settings.sound?"sm":"sm ghost")+'</div>';
+    h+='<div class="set" style="display:block"><span>"Almost over" alerts: how long before a prayer ends</span><div class="chipsrow">'+chips+'</div></div>';
+    h+='<div class="set"><span>Tahajjud reminder (last third of the night)</span>'+btn("tahnotif",S.settings.tahNotif?"On":"Off",S.settings.tahNotif?"sm":"sm ghost")+'</div>';
+    h+='<div class="set"><span>Try a normal reminder</span>'+btn("test","Test","sm ghost")+'</div>';
+    h+='<div class="set"><span>Try an "almost over" alert</span>'+btn("testu","Test","sm ghost")+'</div>';
+    h+='<div class="note">Reminders are scheduled on your phone for the next few weeks and arrive even when the app is closed. Open the app now and then so it can schedule more. Silent or Do Not Disturb mode can still mute them. If reminders go missing, set this app\'s battery usage to <b>Unrestricted</b> / allow auto-start in your phone settings (needed on Xiaomi, Oppo, Vivo, Realme and some Samsung phones).</div></section>';
   }else{
     var perm="Notification" in window?Notification.permission:"unsupported";
     h+='<section class="card"><h2>Reminders</h2>';
-    h+='<div class="set"><span>Phone notifications</span><button class="btn sm '+(S.settings.notif&&perm==="granted"?"":"ghost")+'" data-act="notif">'+(S.settings.notif&&perm==="granted"?"On":"Turn on")+'</button></div>';
-    h+='<div class="set"><span>Sound</span><button class="btn sm '+(S.settings.sound?"":"ghost")+'" data-act="sound">'+(S.settings.sound?"On":"Off")+'</button></div>';
-    h+='<div class="set"><span>Warn me before a prayer ends</span><select data-act="warn">';
-    [10,15,20,30].forEach(function(v){h+='<option value="'+v+'"'+(S.settings.warn===v?" selected":"")+'>'+v+' min</option>';});
-    h+='</select></div>';
-    h+='<div class="set"><span>Try a reminder</span><button class="btn sm ghost" data-act="test">Test</button></div>';
+    h+='<div class="set"><span>Phone notifications</span>'+btn("notif",S.settings.notif&&perm==="granted"?"On":"Turn on",S.settings.notif&&perm==="granted"?"sm":"sm ghost")+'</div>';
+    h+='<div class="set"><span>Sound</span>'+btn("sound",S.settings.sound?"On":"Off",S.settings.sound?"sm":"sm ghost")+'</div>';
+    h+='<div class="set" style="display:block"><span>"Almost over" alerts</span><div class="chipsrow">'+chips+'</div></div>';
+    h+='<div class="set"><span>Try a reminder</span>'+btn("test","Test","sm ghost")+'</div>';
     h+='<div class="note">Reminders fire while this page is open.</div></section>';
   }
 
-  h+='<footer>Times are calculated for Dhaka (Karachi method, Hanafi Asr) and can differ by a few minutes from your local mosque or Islamic Foundation timetable. Your progress is saved on this phone only. · Version '+APP_VERSION+'</footer>';
+  var M=METHODS[S.method]||METHODS.karachi;
+  h+='<footer>Times for '+esc(S.loc.name)+' ('+esc(M.name)+', '+(S.asr==="hanafi"?"Hanafi":"Standard")+' Asr) can differ by a few minutes from your local mosque timetable. Your progress is saved on this phone only. · Version '+APP_VERSION+'</footer>';
 
   document.getElementById("app").innerHTML=h;
   updateLive(now,ws);
@@ -574,7 +797,7 @@ function updateLive(now,ws){
     if(cd)cd.textContent=fmtCD(left);
     var bar=document.getElementById("bar");
     if(bar)bar.style.width=Math.min(100,Math.max(0,(now-cw.s)/total*100))+"%";
-    var urgent=!isDone(cw)&&left<S.settings.warn*60000;
+    var urgent=!isDone(cw)&&urgentMs()>0&&left<urgentMs();
     if(hero){if(urgent)hero.classList.add("urgent");else hero.classList.remove("urgent");}
     var bub=document.getElementById("bubble");
     if(bub&&urgent)bub.textContent="Hurry! Only "+Math.ceil(left/60000)+" min left for "+pinfo(cw.id).name+"! ⏳";
@@ -592,23 +815,42 @@ function tick(){
   var now=Date.now(), ws=windowsFor(now);
   checkReminders(now,ws);
   var k=stateKey(now), p=dk(now);
-  if(k!==curKey||p.s===0){render();}else{updateLive(now,ws);}
+  var ae=document.activeElement, typing=!!(ae&&ae.id==="locq");
+  if((k!==curKey||p.s===0)&&!typing){render();}else{updateLive(now,ws);}
 }
 
 /* ---------- events ---------- */
 document.addEventListener("click",function(ev){
   var el=ev.target.closest?ev.target.closest("[data-act]"):null;
-  if(!el)return;
+  if(!el||el.tagName==="SELECT")return;
   var act=el.getAttribute("data-act");
   if(act==="pray"){logPrayer(el.getAttribute("data-day"),el.getAttribute("data-id"));}
   else if(act==="upd-get"){var u=updateInfo();if(u&&NAT){window.SalahNative.openUrl(u.url);}}
   else if(act==="upd-later"){var u2=updateInfo();if(u2){S.dismissed=u2.n;save();render();}}
+  else if(act==="gps"){useGps();}
+  else if(act==="gotoloc"){var lc=document.getElementById("loccard");if(lc&&lc.scrollIntoView)lc.scrollIntoView({behavior:"smooth"});}
+  else if(act==="keeploc"){S.locSet=true;save();render();}
+  else if(act==="locsearch"){var q=document.getElementById("locq");if(q)locQuery=q.value;doSearch();}
+  else if(act==="locpick"){var r=locResults[parseInt(el.getAttribute("data-i"),10)];if(r)setLocation(r);}
+  else if(act==="warnchip"){
+    var v=parseInt(el.getAttribute("data-v"),10), w=S.settings.warns, ix=w.indexOf(v);
+    if(ix>=0)w.splice(ix,1);else w.push(v);
+    w.sort(function(a,b){return b-a;});
+    save();scheduleNative();render();
+  }
+  else if(act==="tahnotif"){S.settings.tahNotif=!S.settings.tahNotif;save();scheduleNative();render();}
   else if(act==="sound"){S.settings.sound=!S.settings.sound;save();if(S.settings.sound)chime(false);render();}
   else if(act==="test"){
     if(NAT){
       if(nperm!=="granted"){toast("Turn on background reminders first.");return;}
-      window.SalahNative.testNow().then(function(ok){toast(ok?"Test reminder coming in 3 seconds. You can close the app to try it 🔔":"Couldn't schedule the test.");});
+      window.SalahNative.testNow(false).then(function(ok){toast(ok?"Test reminder coming in 3 seconds. You can close the app to try it 🔔":"Couldn't schedule the test.");});
     }else{notify("Test reminder 🕌","This is how your Salah reminders will look.");}
+  }
+  else if(act==="testu"){
+    if(NAT){
+      if(nperm!=="granted"){toast("Turn on background reminders first.");return;}
+      window.SalahNative.testNow(true).then(function(ok){toast(ok?"Alert coming in 3 seconds. Close the app and listen 🚨":"Couldn't schedule the test.");});
+    }
   }
   else if(act==="exact"){if(NAT){window.SalahNative.openExactSettings();}}
   else if(act==="notif"){
@@ -616,7 +858,7 @@ document.addEventListener("click",function(ev){
       window.SalahNative.requestPermission().then(function(r){
         nperm=r;
         if(r==="granted"){toast("Background reminders on ✅","green");scheduleNative();}
-        else{toast("Notifications are blocked. Enable them in phone Settings → Apps → Salah Streak.");}
+        else{toast("Notifications are blocked. Enable them in phone Settings > Apps > Salah Streak.");}
         refreshNative(render);
       });
       return;
@@ -624,8 +866,8 @@ document.addEventListener("click",function(ev){
     if(!("Notification" in window)){toast("This browser doesn't support notifications. In-app reminders still work.");return;}
     if(S.settings.notif&&Notification.permission==="granted"){S.settings.notif=false;save();render();return;}
     try{
-      var r=Notification.requestPermission(function(res){afterPerm(res);});
-      if(r&&r.then)r.then(afterPerm);
+      var pr=Notification.requestPermission(function(res){afterPerm(res);});
+      if(pr&&pr.then)pr.then(afterPerm);
     }catch(e){toast("Notifications are blocked here. In-app reminders still work.");}
   }
 });
@@ -636,9 +878,14 @@ function afterPerm(res){
 }
 document.addEventListener("change",function(ev){
   var el=ev.target;
-  if(el&&el.getAttribute&&el.getAttribute("data-act")==="warn"){
-    S.settings.warn=parseInt(el.value,10)||15;save();scheduleNative();render();
-  }
+  if(!el||!el.getAttribute)return;
+  var act=el.getAttribute("data-act");
+  if(act==="method"&&METHODS[el.value]){S.method=el.value;S.manual=true;save();scheduleNative();render();}
+  else if(act==="asr"){S.asr=el.value==="standard"?"standard":"hanafi";S.manual=true;save();scheduleNative();render();}
+});
+document.addEventListener("input",function(ev){if(ev.target&&ev.target.id==="locq")locQuery=ev.target.value;});
+document.addEventListener("keydown",function(ev){
+  if(ev.key==="Enter"&&ev.target&&ev.target.id==="locq"){locQuery=ev.target.value;doSearch();}
 });
 
 render();

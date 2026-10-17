@@ -1,1 +1,1 @@
-First signed release. From now on updates install over the old version and keep your progress.
+v4: Prayer times for any city in the world (GPS or search). New "almost over" alerts with their own sound and firmer wording. Tahajjud (+25 XP) and 9 new badges. Fixed the phone status bar overlapping the app.
